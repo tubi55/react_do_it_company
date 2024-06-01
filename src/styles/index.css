@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		@apply bg-black/5;
+	}
 	/* common link style inherit from parent el */
 	a {
 		@apply text-inherit;
