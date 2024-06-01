@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply bg-black/5;
+		@apply bg-black/5 w-full overflow-x-hidden;
 	}
 	/* common link style inherit from parent el */
 	a {
