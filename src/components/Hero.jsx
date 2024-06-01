@@ -1,3 +1,4 @@
+import QuickNav from "./QuickNav";
 import Slogan from "./Slogan";
 
 function Hero() {
@@ -14,6 +15,9 @@ function Hero() {
 
 			{/* slogan */}
 			<Slogan />
+
+			{/* Quick Nav */}
+			<QuickNav />
 		</section>
 	);
 }
