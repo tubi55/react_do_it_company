@@ -1,5 +1,12 @@
+import Line from "./Line";
+
 function Intro({ children }) {
-	return <article>{children}</article>;
+	return (
+		<article className="mb-24 text-base font-medium text-black/70">
+			<Line className="mb-10" size={"size-1/12"} />
+			{children}
+		</article>
+	);
 }
 
 export default Intro;

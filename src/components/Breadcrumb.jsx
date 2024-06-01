@@ -11,7 +11,7 @@ function Breadcrumb() {
 	const arr = pathname.split("/").map(el => (el === "" ? (el = "HOME") : el));
 
 	return (
-		<nav>
+		<nav className="flex items-end gap-3 mt-3 max_md:mt-12">
 			{arr.map((path, idx) => {
 				return (
 					// 일반 <></>에는 key값 적용이 불가
@@ -30,7 +30,7 @@ function Breadcrumb() {
 									</Link>
 								) : (
 									//만약 마지막 메뉴면 Link없이 메뉴명만 출력
-									<span>{path.toUpperCase()}</span>
+									<span className="font-bold">{path.toUpperCase()}</span>
 								)
 							}
 						</span>

@@ -2,11 +2,13 @@ import Breadcrumb from "./Breadcrumb";
 
 function Layout({ title, children }) {
 	return (
-		<main>
-			<h2>{title}</h2>
+		<main className="px-[10vw] pt-[22vh] pb-[5vh] flex justify-between flex-wrap max_md:pt-[16vh]">
+			<h2 className="font-thin font-raleway leading-none tracking-tight text-[7vmax] text-black max_md:text-[16vmin]">
+				{title}
+			</h2>
 			<Breadcrumb />
 
-			<section>{children}</section>
+			<section className="w-full min-h-[100vh] mt-8">{children}</section>
 		</main>
 	);
 }
