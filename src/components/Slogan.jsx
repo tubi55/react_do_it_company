@@ -1,4 +1,7 @@
+import MotionText from "./MotionText";
+import MotionTextEl from "./MotionTextEl";
 import { FaFile } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 function Slogan() {
 	const titleStyle =
@@ -6,22 +9,34 @@ function Slogan() {
 	return (
 		<article className="relative w-[80%] flex flex-wrap justify-between max_md:-translate-y-20">
 			<div className="w-[60%] order-2 max_xl:w-full max_xl:order-1">
-				<h2 className={titleStyle}>LEADING INOVATOR</h2>
-				<h2 className={titleStyle}>UI/UX DESIGN</h2>
+				<MotionTextEl el={"h2"} delay={2} className={titleStyle}>
+					LEADING INOVATOR
+				</MotionTextEl>
+				<MotionTextEl el={"h2"} delay={2.3} className={titleStyle}>
+					UI/UX DESIGN
+				</MotionTextEl>
 
 				<div className="mt-4">
-					<div>Join us on a journey of digital transformation</div>
-					<div>
+					<MotionText delay={2.8}>
+						Join us on a journey of digital transformation
+					</MotionText>
+					<br />
+					<MotionText delay={3}>
 						We pride ourselves on our commitment to quality and innovation
-					</div>
+					</MotionText>
 				</div>
 			</div>
 
 			<nav className="w-[30%] order-1 flex items-end justify-end max_xl:w-full max_xl:order-2 max_xl:justify-start max_xl:mt-16 ">
-				<button className="btn">
+				<motion.button
+					className="btn"
+					initial={{ opacity: 0, x: -50 }}
+					animate={{ opacity: 1, x: 0 }}
+					exit={{ opacity: 0, x: -50, transition: { delay: 0 } }}
+					transition={{ duration: 1, delay: 3.5 }}>
 					<FaFile />
 					ABOUT DCODELAB
-				</button>
+				</motion.button>
 			</nav>
 		</article>
 	);

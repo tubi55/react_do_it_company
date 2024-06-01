@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply bg-black/5 w-full overflow-x-hidden;
+		@apply w-full overflow-x-hidden bg-black/5;
 	}
 	/* common link style inherit from parent el */
 	a {
@@ -73,6 +73,11 @@
 	/* img style in thumbnail */
 	.pic {
 		@apply absolute top-0 left-0 inline-block object-cover w-full h-full;
+	}
+
+	/* mask frame style */
+	.mframe {
+		@apply relative inline-block overflow-hidden;
 	}
 }
 
