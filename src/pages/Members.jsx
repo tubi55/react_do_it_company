@@ -5,6 +5,7 @@ import Thumbnail from "../components/Thumbnail";
 import Line from "../components/Line";
 import Mask from "../components/Mask";
 import MotionTextEl from "../components/MotionTextEl";
+import MotionBox from "../components/MotionBox";
 import { memberInfo } from "../assets/data";
 import { motion } from "framer-motion";
 
@@ -71,9 +72,11 @@ function Members() {
 					</div>
 
 					{/* CEO pic */}
-					<div className="w-[40%] h-[40vmax] -translate-y-[20%] max_lg:translate-y-[0%] max_sm:w-full max_sm:h-[60vw]">
+					<MotionBox
+						delay={3}
+						className="w-[40%] h-[40vmax] -translate-y-[20%] max_lg:translate-y-[0%] max_sm:w-full max_sm:h-[60vw]">
 						<Thumbnail className="size-full" src={"/david.jpg"} />
-					</div>
+					</MotionBox>
 				</article>
 
 				{/* Team */}
