@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	/* common link style inherit from parent el */
+	a {
+		@apply text-inherit;
+	}
+
+	/* header layout style */
+	header {
+		@apply fixed w-full px-[10vw] py-5 flex justify-between backdrop-blur-md z-20 border-b border-black/5 bg-white/5;
+	}
+}

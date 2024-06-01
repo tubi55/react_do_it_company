@@ -5,11 +5,11 @@ import Utils from "./Utils";
 function Header() {
 	return (
 		<header>
-			<h1>
+			<h1 className="text-2xl font-semibold drop-shadow-md">
 				<Link to="/">DCODELAB</Link>
 			</h1>
 
-			<nav>
+			<nav className="flex items-center gap-40">
 				<Gnb />
 				<Utils />
 			</nav>

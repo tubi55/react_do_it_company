@@ -9,7 +9,7 @@ function Utils() {
 	];
 
 	return (
-		<ul>
+		<ul className="flex gap-6 text-sm max_2xl:hidden">
 			{data.map((el, idx) => (
 				<li key={idx}>
 					<Link to={el.url}>

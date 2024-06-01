@@ -10,7 +10,7 @@ function Gnb() {
 	const { pathname } = useLocation();
 
 	return (
-		<ul>
+		<ul className="flex items-center gap-20 text-sm font-semibold max_xl:gap-12 max_lg:hidden">
 			{menuData.map((data, idx) => {
 				return (
 					<li key={idx}>

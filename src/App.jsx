@@ -7,6 +7,7 @@ import Gallery from "./pages/Gallery";
 import Youtube from "./pages/Youtube";
 import YoutubeDetail from "./pages/YoutubeDetail";
 import Contact from "./pages/Contact";
+import Nav from "./components/Nav";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 			</Routes>
 
 			<Footer />
+			<Nav />
 		</>
 	);
 }
