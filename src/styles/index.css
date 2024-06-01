@@ -12,4 +12,51 @@
 	header {
 		@apply fixed w-full px-[10vw] py-5 flex justify-between backdrop-blur-md z-20 border-b border-black/5 bg-white/5;
 	}
+
+	/* footer layout base style */
+	/* 공통으로 스타일이 들어갈 부분은 많은데 동적 데이터는 없어서 따로 컴포넌트 분리 필요할 필요가 없는 요소는 이곳에서 스타일 지정 가능 */
+	footer {
+		@apply w-full px-[10vw] py-14 bg-black/80;
+
+		section {
+			@apply flex flex-wrap items-center justify-between gap-20 border-b py-14 border-white/10 text-white/40;
+
+			h2 {
+				@apply text-2xl font-semibold tracking-wider text-white/60;
+			}
+
+			p {
+				@apply text-base;
+			}
+
+			&:last-child {
+				@apply border-none;
+			}
+
+			article {
+				h2 {
+					@apply mb-6 text-lg font-semibold text-white/80;
+				}
+				ul {
+					@apply font-medium leading-loose;
+				}
+
+				&:last-child {
+					@apply w-[25%] max_xl:w-[100%];
+
+					p {
+						@apply mb-8;
+					}
+
+					ul {
+						@apply flex gap-4;
+
+						li {
+							@apply inline-block p-2 text-xs text-white rounded bg-white/10;
+						}
+					}
+				}
+			}
+		}
+	}
 }
