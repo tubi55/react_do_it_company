@@ -1,3 +1,5 @@
+import Slogan from "./Slogan";
+
 function Hero() {
 	return (
 		<section className="relative flex flex-wrap items-center justify-center w-full h-screen overflow-hidden bg-white">
@@ -9,6 +11,9 @@ function Hero() {
 				muted
 				autoPlay
 			/>
+
+			{/* slogan */}
+			<Slogan />
 		</section>
 	);
 }
