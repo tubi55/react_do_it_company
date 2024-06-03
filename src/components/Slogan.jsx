@@ -27,7 +27,7 @@ function Slogan() {
 				</div>
 			</div>
 
-			<nav className="w-[30%] order-1 flex items-end justify-end max_xl:w-full max_xl:order-2 max_xl:justify-start max_xl:mt-16 ">
+			<nav className="w-[30%] order-1 flex items-end justify-end max_xl:w-full max_xl:order-2 max_xl:justify-start max_xl:mt-16 max_sm:hidden ">
 				<motion.button
 					className="btn"
 					initial={{ opacity: 0, x: -50 }}

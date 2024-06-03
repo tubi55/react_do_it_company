@@ -9,7 +9,7 @@ function Thumbnail({ src = "", text = "alt text", shadow = true, className }) {
 		<figure className={twMerge("size-full transition-all relative", className)}>
 			{shadow && (
 				<img
-					className={"translate-x-2 translate-y-2 pic blur-md"}
+					className="translate-x-2 translate-y-2 pic blur-md z-400"
 					src={src}
 					alt={text}
 				/>
