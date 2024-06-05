@@ -5,7 +5,7 @@ import Utils from "./Utils";
 function Header() {
 	return (
 		<header>
-			<h1 className="text-2xl font-semibold drop-shadow-md">
+			<h1 className="text-2xl font-semibold drop-shadow-md font-orbitron">
 				<Link to="/">DCODELAB</Link>
 			</h1>
 

@@ -54,7 +54,7 @@ function Footer() {
 			</section>
 
 			<section>
-				<h2>DCODELAB</h2>
+				<h2 className="font-orbitron">DCODELAB</h2>
 				<p>2024 dcodelab &copy; All Rights reserved.</p>
 			</section>
 		</footer>

@@ -5,16 +5,13 @@ import Layout from "../components/Layout";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import Thumbnail from "../components/Thumbnail";
+import Line from "../components/Line";
 
 function Youtube() {
-	console.log("youtube");
 	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
 	const delay = 1.8;
 	const [Lists, setLists] = useState([]);
 	const [Statistic, setStatistic] = useState(null);
-	//혹 크롬 콘솔창에서 코드 라인 번호가 다르게 출력시 크롬 개발자도구 환결창 열어서 소스맵 사용 체크 확인
-	//console.log(Lists);
-	//console.log(Statistic);
 
 	//list data fetching
 	useEffect(() => {
@@ -65,44 +62,83 @@ function Youtube() {
 					<Mask delay={delay + 0.2} />
 				</div>
 			</Intro>
+
 			<Content>
-				<article className="border border-black">
-					{/* 첫 렌더링 시 Vids배열 자체가 비어있으므로 없는 객체값을 호출시 오류 발생: optional chaining으로 해결 */}
-					<h2>{Lists[0]?.snippet.title}</h2>
-					<p>{Lists[0]?.snippet.description}</p>
+				{/* First Video Info */}
+				<article className="flex flex-wrap justify-between mb-40">
+					{/* Video Thumb */}
 					<Thumbnail
 						src={Lists[0]?.snippet.thumbnails.standard.url}
-						shadow={false}
-						className="h-40 w-80"
+						shadow={true}
+						className="w-[55%] h-[16vw] [&_img:first-child]:opacity-50"
 					/>
-					<span>
-						{Lists[0]?.snippet.publishedAt.split("T")[0].split("-").join(".")}
-					</span>
 
-					<ul>
-						<li>View: {Statistic?.viewCount}</li>
-						<li>Like: {Statistic?.likeCount}</li>
-						<li>Comment: {Statistic?.commentCount}</li>
-					</ul>
+					{/* information */}
+					<div className="w-[40%] flex flex-wrap content-between">
+						<ul className="flex w-full [&>*]:w-1/3 [&_span]:w-full [&_span]:text-sm [&_span]:text-black/70 [&_span]:block [&_strong]:font-orbitron [&_strong]:font-[400] [&_strong]:text-4xl ">
+							<li>
+								<span>Like</span>
+								<strong>{Statistic?.likeCount}</strong>
+							</li>
+							<li>
+								<span>Comment</span>
+								<strong>{Statistic?.commentCount}</strong>
+							</li>
+							<li>
+								<span>View</span>
+								<strong>{Statistic?.viewCount}</strong>
+							</li>
+						</ul>
+
+						<div>
+							<h2 className="mb-2 text-xl font-medium leading-tight font-raleway">
+								{Lists[0]?.snippet.title.length >= 100
+									? Lists[0]?.snippet.title.substring(0, 100) + "..."
+									: Lists[0]?.snippet.title}
+							</h2>
+							<Line size={"size-[5%]"} />
+							<p className="mt-4 mb-4 text-xs text-black/40">
+								{Lists[0]?.snippet.description.length >= 260
+									? Lists[0]?.snippet.description.substring(0, 260) + "..."
+									: Lists[0]?.snippet.description}
+							</p>
+							<span className="text-xs tracking-widest font-orbitron">
+								{Lists[0]?.snippet.publishedAt
+									.split("T")[0]
+									.split("-")
+									.join(".")}
+							</span>
+						</div>
+					</div>
 				</article>
 
-				{Lists.slice(1).map((data, idx) => {
-					return (
-						<article key={idx}>
-							<h2 className="font-bold">{data.snippet.title}</h2>
-							<p>{data.snippet.description}</p>
+				{/* Rest Video Lists Frame */}
+				<div>
+					{Lists.slice(1).map((data, idx) => {
+						return (
+							<article key={idx}>
+								{/* Video Thumb */}
+								<Thumbnail
+									src={data.snippet.thumbnails.standard.url}
+									shadow={false}
+									className="h-40 w-80"
+								/>
 
-							<Thumbnail
-								src={data.snippet.thumbnails.standard.url}
-								shadow={false}
-								className="h-40 w-80"
-							/>
-							<span>
-								{data.snippet.publishedAt.split("T")[0].split("-").join(".")}
-							</span>
-						</article>
-					);
-				})}
+								{/* Video Info */}
+								<div>
+									<h2 className="font-bold">{data.snippet.title}</h2>
+									<p>{data.snippet.description}</p>
+									<span>
+										{data.snippet.publishedAt
+											.split("T")[0]
+											.split("-")
+											.join(".")}
+									</span>
+								</div>
+							</article>
+						);
+					})}
+				</div>
 			</Content>
 		</Layout>
 	);

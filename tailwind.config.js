@@ -4,7 +4,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				raleway: ["Raleway", "sans-serif"]
+				raleway: ["Raleway", "sans-serif"],
+				orbitron: ["Orbitron", "sans-serif"]
 			},
 			screens: {
 				max_2xl: { max: "1535px" }, //(max-width: 1535px)

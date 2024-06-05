@@ -5,7 +5,7 @@ function Home() {
 	return (
 		<>
 			<Hero />
-			<Mask duration={1} />
+			<Mask duration={0.7} />
 		</>
 	);
 }

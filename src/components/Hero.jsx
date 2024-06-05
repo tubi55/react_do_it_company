@@ -15,7 +15,7 @@ function Hero() {
 				initial={{ opacity: 0, scale: 2 }}
 				animate={{ opacity: 0.6, scale: 1.01 }}
 				exit={{ opacity: 0, scale: 2, transition: { delay: 0 } }}
-				transition={{ duration: 1, delay: 1 }}
+				transition={{ duration: 1, delay: 0.7 }}
 			/>
 
 			{/* slogan */}
