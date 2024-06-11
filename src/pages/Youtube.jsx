@@ -69,19 +69,19 @@ function Youtube() {
 
 			<Content>
 				{/* First Video Info */}
-				<article className="flex flex-wrap justify-between mb-40">
+				<article className="flex flex-wrap justify-between mb-40 ">
 					{/* Video Thumb */}
 					<MotionBox
 						delay={2.4}
-						className="w-[55%] h-[20vw] [&_img:first-child]:opacity-50">
+						className="w-[55%] h-[20vw] [&_img:first-child]:opacity-50 max_xl:w-full max_xl:mb-20 max_xl:h-[40vh] max_lg:h-[30vh] max_md:h-[20vh] max_sm:h-[14vh]">
 						<Thumbnail
 							src={Lists[0]?.snippet.thumbnails.standard.url}
-							className="size-full"
+							className="size-full "
 						/>
 					</MotionBox>
 
 					{/* information */}
-					<div className="w-[40%] flex flex-wrap content-between">
+					<div className="w-[40%] flex flex-wrap content-between max_xl:w-full">
 						<ul className="flex w-full [&>*]:w-1/3 [&_strong]:font-orbitron ">
 							<li>
 								<MotionTextEl
@@ -94,7 +94,7 @@ function Youtube() {
 
 								<MotionTextEl
 									el={"strong"}
-									className="text-4xl font-[400]"
+									className="text-4xl font-[400] max_md:text-xl"
 									delay={2.8}>
 									{Statistic?.likeCount}
 								</MotionTextEl>
@@ -110,7 +110,7 @@ function Youtube() {
 
 								<MotionTextEl
 									el={"strong"}
-									className="text-4xl font-[400]"
+									className="text-4xl font-[400] max_md:text-xl"
 									delay={3.2}>
 									{Statistic?.commentCount}
 								</MotionTextEl>
@@ -125,7 +125,7 @@ function Youtube() {
 								<br />
 								<MotionTextEl
 									el={"strong"}
-									className="text-4xl font-[400]"
+									className="text-4xl font-[400] max_md:text-xl"
 									delay={3.6}>
 									{Statistic?.viewCount}
 								</MotionTextEl>
@@ -134,7 +134,7 @@ function Youtube() {
 
 						<div>
 							<motion.h2
-								className="mb-2 text-xl font-medium leading-tight font-raleway"
+								className="mb-2 text-xl font-medium leading-tight font-raleway max_md:text-base max_md:mt-10"
 								initial={{ y: 100, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: -100, opacity: 0, transition: { delay: 0 } }}
@@ -165,11 +165,11 @@ function Youtube() {
 				</article>
 
 				{/* Rest Video Lists Frame */}
-				<h2 className="w-full mb-8 text-4xl font-thin font-orbitron text-black/70">
+				<h2 className="w-full mb-8 text-4xl font-thin font-orbitron text-black/70 max_md:text-3xl">
 					Youtube Video List
 				</h2>
 				<Line size={"size-[5%]"} className="mb-8" />
-				<p className="w-[60%] mb-24 text-xl px-10 relative">
+				<p className="w-[60%] mb-24 text-xl px-10 relative max_md:w-full">
 					<span className="absolute top-0 left-0 font-sans text-6xl">
 						&quot;
 					</span>
@@ -181,24 +181,24 @@ function Youtube() {
 					</span>
 				</p>
 
-				<div className="grid grid-cols-7 gap-14">
+				<div className="grid grid-cols-7 gap-[3vw] max_lg:grid-cols-2 max_md:grid-cols-1">
 					{Lists.slice(1).map((data, idx) => {
 						return (
 							<article
 								key={idx}
 								className={twMerge(
-									"pb-10",
+									"pb-10  max_lg:col-span-1 max_lg:row-span-1",
 									idx === 0 || idx === 5
 										? "col-span-3 row-span-2"
-										: "col-span-2"
+										: "col-span-2 "
 								)}>
 								{/* Video Thumb */}
 								<Thumbnail
 									src={data.snippet.thumbnails.standard.url}
 									shadow={true}
 									className={twMerge(
-										"w-full [&>*:first-child]:opacity-90 mb-6 ",
-										idx === 0 || idx === 5 ? "h-[18vw]" : "h-[10vw]"
+										"w-full [&>*:first-child]:opacity-90 mb-6 max_lg:h-[20vw] max_md:h-[40vw] ",
+										idx === 0 || idx === 5 ? "h-[17vw]" : "h-[10vw]"
 									)}
 								/>
 
@@ -206,7 +206,7 @@ function Youtube() {
 								<div className="pb-6 border-b border-black/20">
 									<h2
 										className={clsx(
-											"text-black/70",
+											"text-black/70 max_lg:text-xl max_lg:font-semibold max_lg:pt-0 max_lg:opacity-100",
 											idx === 0 || idx === 5
 												? "text-4xl font-thin mb-7 pt-4"
 												: "text-xl font-semibold mb-3 opacity-70"
@@ -215,7 +215,7 @@ function Youtube() {
 									</h2>
 									<p
 										className={clsx(
-											"break-all mb-7 opacity-60",
+											"break-all mb-7 opacity-60 max_lg:text-base max_lg:pt-0",
 											(idx === 0 || idx === 5) && "text-xl font-thin pt-4"
 										)}>
 										{data.snippet.description.length >= 200
