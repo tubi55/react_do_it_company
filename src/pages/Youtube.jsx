@@ -165,6 +165,18 @@ function Youtube() {
 				</article>
 
 				{/* Rest Video Lists Frame */}
+				<h2 className="w-full mb-8 text-4xl font-thin font-orbitron text-black/70">
+					Youtube Video List
+				</h2>
+				<Line size={"size-[5%]"} className="mb-8" />
+				<p className="w-[60%] mb-16 text-lg">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+					aliquam doloribus vel suscipit modi esse quis! Debitis et accusamus
+					commodi laudantium in itaque possimus beatae saepe. Incidunt id
+					molestias ipsa delectus, repudiandae magnam quam laboriosam quidem
+					fuga, pariatur, inventore nostrum!
+				</p>
+
 				<div className="grid grid-cols-7 gap-14">
 					{Lists.slice(1).map((data, idx) => {
 						return (
@@ -192,7 +204,7 @@ function Youtube() {
 										className={clsx(
 											"text-black/70",
 											idx === 0 || idx === 5
-												? "text-5xl font-thin mb-7 pt-4"
+												? "text-4xl font-thin mb-7 pt-4"
 												: "text-xl font-semibold mb-3"
 										)}>
 										{data.snippet.title}
