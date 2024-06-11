@@ -8,6 +8,7 @@ import Thumbnail from "../components/Thumbnail";
 import Line from "../components/Line";
 import MotionBox from "../components/MotionBox";
 import MotionTextEl from "../components/MotionTextEl";
+import { twMerge } from "tailwind-merge";
 
 function Youtube() {
 	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
@@ -18,7 +19,7 @@ function Youtube() {
 	//list data fetching
 	useEffect(() => {
 		const pid = "PLYOPkdUKSFgWqafuDQN9di3uLJoTV3L3W";
-		const num = 10;
+		const num = 11;
 		const req_list = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
 
 		fetch(req_list)
@@ -74,7 +75,6 @@ function Youtube() {
 						className="w-[55%] h-[16vw] [&_img:first-child]:opacity-50">
 						<Thumbnail
 							src={Lists[0]?.snippet.thumbnails.standard.url}
-							shadow={true}
 							className="size-full"
 						/>
 					</MotionBox>
@@ -164,10 +164,14 @@ function Youtube() {
 				</article>
 
 				{/* Rest Video Lists Frame */}
-				<div>
+				<div className="grid grid-cols-4 gap-5">
 					{Lists.slice(1).map((data, idx) => {
 						return (
-							<article key={idx}>
+							<article
+								key={idx}
+								className={twMerge(
+									(idx === 0 || idx === 5) && "col-span-2 row-span-2"
+								)}>
 								{/* Video Thumb */}
 								<Thumbnail
 									src={data.snippet.thumbnails.standard.url}
@@ -177,7 +181,9 @@ function Youtube() {
 
 								{/* Video Info */}
 								<div>
-									<h2 className="font-bold">{data.snippet.title}</h2>
+									<h2 className="font-bold">
+										{data.snippet.title} {idx}
+									</h2>
 									<p>{data.snippet.description}</p>
 									<span>
 										{data.snippet.publishedAt
