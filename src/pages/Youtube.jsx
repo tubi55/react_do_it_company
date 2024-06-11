@@ -9,6 +9,7 @@ import Line from "../components/Line";
 import MotionBox from "../components/MotionBox";
 import MotionTextEl from "../components/MotionTextEl";
 import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
 
 function Youtube() {
 	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
@@ -18,7 +19,7 @@ function Youtube() {
 
 	//list data fetching
 	useEffect(() => {
-		const pid = "PLYOPkdUKSFgWqafuDQN9di3uLJoTV3L3W";
+		const pid = "PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu";
 		const num = 11;
 		const req_list = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
 
@@ -72,7 +73,7 @@ function Youtube() {
 					{/* Video Thumb */}
 					<MotionBox
 						delay={2.4}
-						className="w-[55%] h-[16vw] [&_img:first-child]:opacity-50">
+						className="w-[55%] h-[20vw] [&_img:first-child]:opacity-50">
 						<Thumbnail
 							src={Lists[0]?.snippet.thumbnails.standard.url}
 							className="size-full"
@@ -164,28 +165,48 @@ function Youtube() {
 				</article>
 
 				{/* Rest Video Lists Frame */}
-				<div className="grid grid-cols-4 gap-5">
+				<div className="grid grid-cols-7 gap-14">
 					{Lists.slice(1).map((data, idx) => {
 						return (
 							<article
 								key={idx}
 								className={twMerge(
-									(idx === 0 || idx === 5) && "col-span-2 row-span-2"
+									"pb-10",
+									idx === 0 || idx === 5
+										? "col-span-3 row-span-2"
+										: "col-span-2"
 								)}>
 								{/* Video Thumb */}
 								<Thumbnail
 									src={data.snippet.thumbnails.standard.url}
-									shadow={false}
-									className="h-40 w-80"
+									shadow={true}
+									className={twMerge(
+										"w-full [&>*:first-child]:opacity-90 mb-6 ",
+										idx === 0 || idx === 5 ? "h-[18vw]" : "h-[10vw]"
+									)}
 								/>
 
 								{/* Video Info */}
 								<div>
-									<h2 className="font-bold">
-										{data.snippet.title} {idx}
+									<h2
+										className={clsx(
+											"text-black/70",
+											idx === 0 || idx === 5
+												? "text-5xl font-thin mb-7 pt-4"
+												: "text-xl font-semibold mb-3"
+										)}>
+										{data.snippet.title}
 									</h2>
-									<p>{data.snippet.description}</p>
-									<span>
+									<p
+										className={clsx(
+											"break-all mb-7",
+											(idx === 0 || idx === 5) && "text-xl font-thin pt-4"
+										)}>
+										{data.snippet.description.length >= 200
+											? data.snippet.description.substring(0, 200) + "..."
+											: data.snippet.description}
+									</p>
+									<span className="text-sm tracking-wider font-orbitron text-sky-600">
 										{data.snippet.publishedAt
 											.split("T")[0]
 											.split("-")
