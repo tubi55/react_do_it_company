@@ -11,12 +11,16 @@ import MotionTextEl from "../components/MotionTextEl";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 //import { Link } from "react-router-dom";
+import { useCustomText } from "../hooks/useText";
 
 function Youtube() {
 	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
 	const delay = 1.8;
 	const [Lists, setLists] = useState([]);
 	const [Statistic, setStatistic] = useState(null);
+
+	const shortenText = useCustomText("shorten");
+	const changeText = useCustomText("combined");
 
 	//list data fetching
 	useEffect(() => {
@@ -133,7 +137,7 @@ function Youtube() {
 							</li>
 						</ul>
 
-						<div>
+						<div className="mt-20 max_md:mt-4">
 							<motion.h2
 								className="mb-2 text-xl font-medium leading-tight font-raleway max_md:text-base max_md:mt-10"
 								initial={{ y: 100, opacity: 0 }}
@@ -219,15 +223,10 @@ function Youtube() {
 											"break-all mb-7 opacity-60 max_lg:text-base max_lg:pt-0",
 											(idx === 0 || idx === 5) && "text-xl font-thin pt-4"
 										)}>
-										{data.snippet.description.length >= 200
-											? data.snippet.description.substring(0, 200) + "..."
-											: data.snippet.description}
+										{shortenText(data.snippet.description, 200)}
 									</p>
 									<span className="text-sm tracking-wider font-orbitron text-sky-600">
-										{data.snippet.publishedAt
-											.split("T")[0]
-											.split("-")
-											.join(".")}
+										{changeText(data.snippet.publishedAt.split("T")[0], ".")}
 									</span>
 								</div>
 							</article>
