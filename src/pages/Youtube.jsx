@@ -6,6 +6,8 @@ import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import Thumbnail from "../components/Thumbnail";
 import Line from "../components/Line";
+import MotionBox from "../components/MotionBox";
+import MotionTextEl from "../components/MotionTextEl";
 
 function Youtube() {
 	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
@@ -67,41 +69,90 @@ function Youtube() {
 				{/* First Video Info */}
 				<article className="flex flex-wrap justify-between mb-40">
 					{/* Video Thumb */}
-					<Thumbnail
-						src={Lists[0]?.snippet.thumbnails.standard.url}
-						shadow={true}
-						className="w-[55%] h-[16vw] [&_img:first-child]:opacity-50"
-					/>
+					<MotionBox
+						delay={2.4}
+						className="w-[55%] h-[16vw] [&_img:first-child]:opacity-50">
+						<Thumbnail
+							src={Lists[0]?.snippet.thumbnails.standard.url}
+							shadow={true}
+							className="size-full"
+						/>
+					</MotionBox>
 
 					{/* information */}
 					<div className="w-[40%] flex flex-wrap content-between">
-						<ul className="flex w-full [&>*]:w-1/3 [&_span]:w-full [&_span]:text-sm [&_span]:text-black/70 [&_span]:block [&_strong]:font-orbitron [&_strong]:font-[400] [&_strong]:text-4xl ">
+						<ul className="flex w-full [&>*]:w-1/3 [&_strong]:font-orbitron ">
 							<li>
-								<span>Like</span>
-								<strong>{Statistic?.likeCount}</strong>
+								<MotionTextEl
+									el={"span"}
+									className="text-sm text-black/70"
+									delay={2.6}>
+									Like
+								</MotionTextEl>
+								<br />
+
+								<MotionTextEl
+									el={"strong"}
+									className="text-4xl font-[400]"
+									delay={2.8}>
+									{Statistic?.likeCount}
+								</MotionTextEl>
 							</li>
 							<li>
-								<span>Comment</span>
-								<strong>{Statistic?.commentCount}</strong>
+								<MotionTextEl
+									el={"span"}
+									className="text-sm text-black/70"
+									delay={3.0}>
+									Comment
+								</MotionTextEl>
+								<br />
+
+								<MotionTextEl
+									el={"strong"}
+									className="text-4xl font-[400]"
+									delay={3.2}>
+									{Statistic?.commentCount}
+								</MotionTextEl>
 							</li>
 							<li>
-								<span>View</span>
-								<strong>{Statistic?.viewCount}</strong>
+								<MotionTextEl
+									el={"span"}
+									className="text-sm text-black/70"
+									delay={3.4}>
+									View
+								</MotionTextEl>
+								<br />
+								<MotionTextEl
+									el={"strong"}
+									className="text-4xl font-[400]"
+									delay={3.6}>
+									{Statistic?.viewCount}
+								</MotionTextEl>
 							</li>
 						</ul>
 
 						<div>
-							<h2 className="mb-2 text-xl font-medium leading-tight font-raleway">
+							<motion.h2
+								className="mb-2 text-xl font-medium leading-tight font-raleway"
+								initial={{ y: 100, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								exit={{ y: -100, opacity: 0, transition: { delay: 0 } }}
+								transition={{ duration: 1, delay: 3.0 }}>
 								{Lists[0]?.snippet.title.length >= 100
 									? Lists[0]?.snippet.title.substring(0, 100) + "..."
 									: Lists[0]?.snippet.title}
-							</h2>
+							</motion.h2>
 							<Line size={"size-[5%]"} />
-							<p className="mt-4 mb-4 text-xs text-black/40">
+							<motion.p
+								className="mt-4 mb-4 text-xs text-black/40"
+								initial={{ y: 100, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								exit={{ y: -100, opacity: 0, transition: { delay: 0 } }}
+								transition={{ duration: 1, delay: 3.4 }}>
 								{Lists[0]?.snippet.description.length >= 260
 									? Lists[0]?.snippet.description.substring(0, 260) + "..."
 									: Lists[0]?.snippet.description}
-							</p>
+							</motion.p>
 							<span className="text-xs tracking-widest font-orbitron">
 								{Lists[0]?.snippet.publishedAt
 									.split("T")[0]
