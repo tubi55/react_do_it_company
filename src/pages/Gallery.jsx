@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import Thumbnail from "../components/Thumbnail";
+import Masonry from "react-masonry-component";
 
 function Gallery() {
 	const delay = 1.8;
@@ -52,26 +53,33 @@ function Gallery() {
 			</Intro>
 
 			<Content>
-				<div className="w-full ">
-					{Pics.map((pic, idx) => {
-						return (
-							<article key={idx} className="w-[23%] mb-14 border-b border-black/40 max_2xl:w-[32%] max_lg:w-[48%] max_sm:w-[100%]">
-								<Thumbnail
-									src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-									className="w-full mb-1 [&_img:first-child]:opacity-50"
-									h_auto={true}
-								/>
+				<motion.div
+					className="w-full"
+					initial={{ y: 100, opacity: 0 }}
+					animate={{ y: 0, opacity: 1 }}
+					exit={{ x: 100, opacity: 0, transition: { delay: 0 } }}
+					transition={{ duration: 1, delay: 2.4 }}>
+					<Masonry elementType={"div"} spacing={2} options={{ transitionDuration: 0.5 }} disableImagesLoaded={false} updateOnEachImageLoad={false}>
+						{Pics.map((pic, idx) => {
+							return (
+								<article key={idx} className="w-[25%] mb-14  max_2xl:w-[33.333%] max_lg:w-[50%] max_sm:w-[100%] px-5">
+									<Thumbnail
+										src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+										className="w-full mb-1 [&_img:first-child]:opacity-60"
+										h_auto={true}
+									/>
 
-								<h2 className="my-5 font-lg">{pic.title}</h2>
+									<h2 className="my-5 font-lg">{pic.title}</h2>
 
-								<div className="flex items-end w-full gap-3 mb-3">
-									<img className="w-10" src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt={pic.owner} />
-									<span>{pic.owner}</span>
-								</div>
-							</article>
-						);
-					})}
-				</div>
+									<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
+										<img className="w-10" src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt={pic.owner} />
+										<span>{pic.owner}</span>
+									</div>
+								</article>
+							);
+						})}
+					</Masonry>
+				</motion.div>
 			</Content>
 		</Layout>
 	);
