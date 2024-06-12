@@ -15,10 +15,19 @@ function Gallery() {
 		const fetchFlickr = async () => {
 			const baseURL = "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
 			const key = import.meta.env.VITE_FLICKR_KEY;
-			const method_interest = "flickr.interestingness.getList";
 			const num = 40;
-			const url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
-			const data = await fetch(url);
+
+			const method_user = "flickr.people.getPhotos";
+			//const method_interest = "flickr.interestingness.getList";
+			//const method_search = "flickr.photos.search";
+			//const keyword = "sky";
+			const myId = "197119297@N02";
+
+			//const url_interest = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+			const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${myId}`;
+			//const url_search = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${keyword}`;
+
+			const data = await fetch(url_user);
 			const json = await data.json();
 			setPics(json.photos.photo);
 		};
@@ -65,7 +74,7 @@ function Gallery() {
 								<article key={idx} className="w-[25%] mb-14  max_2xl:w-[33.333%] max_lg:w-[50%] max_sm:w-[100%] px-5">
 									<Thumbnail
 										src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-										className="w-full mb-1 [&_img:first-child]:opacity-60"
+										className="w-full mb-1 [&_img:first-child]:opacity-70"
 										h_auto={true}
 									/>
 
