@@ -75,24 +75,22 @@ function YoutubeDetail() {
 
 				<div className="flex flex-wrap justify-between py-20">
 					{/* description */}
-					<article className="w-[70%]">
+					<article className="w-[70%] max_lg:w-full max_lg:mb-20">
 						<h3 className="mb-10 text-3xl font-orbitron">Description</h3>
-						<p className="pr-20 text-sm border-r border-black/20">
+						<p className="pr-20 text-sm border-r border-black/20 max_lg:pr-0 max_lg:border-r-0">
 							{Data?.snippet.description}
 						</p>
 					</article>
 
 					{/* stastics */}
-					<article className="w-[29%] pl-14">
-						<h3 className="w-full mb-10 text-3xl font-orbitron">Video Info</h3>
+					<article className="w-[29%] pl-14 max_lg:w-full max_lg:pl-0">
+						<h3 className="w-full mb-10 text-3xl font-orbitron ">Video Info</h3>
 
-						<ul className="w-full [&_strong]:font-orbitron [&_strong]:font-semibold [&_strong]:text-xl [&_strong]:text-black/80 [&_strong]:tracking-wider [&>li]:mb-10">
+						<ul className="w-full [&_strong]:font-orbitron [&_strong]:font-semibold [&_strong]:text-xl [&_strong]:text-black/80 [&_strong]:tracking-wider [&>li]:mb-10 max_lg:flex max_lg:flex-wrap max_lg:justify-between max_sm:[&>li]:w-[47%]">
 							<li>
 								<div>DATE : </div>
 								<strong>
 									{changeText(
-										//초기 렌더링시 Data값이 null이므로 split메서드 에러발생
-										//해결: Data객체값이 있을때만 split멤서드 호출, 그렇지 않으면 빈문자열
 										Data ? Data.snippet.publishedAt.split("T")[0] : "",
 										"."
 									)}
