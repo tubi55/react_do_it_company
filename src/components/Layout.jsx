@@ -2,8 +2,13 @@ import Breadcrumb from "./Breadcrumb";
 import Mask from "./Mask";
 import MotionTextEl from "./MotionTextEl";
 import { twMerge } from "tailwind-merge";
+import { useEffect } from "react";
 
 function Layout({ title, children }) {
+	useEffect(() => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	}, []);
+
 	return (
 		<>
 			<main className="px-[10vw] pt-[22vh] pb-[5vh] flex justify-between flex-wrap max_md:pt-[16vh]">
