@@ -9,9 +9,10 @@ function Layout({ title, children }) {
 				<MotionTextEl
 					el={"h2"}
 					delay={0.7}
-					className="font-thin font-raleway leading-none tracking-tight text-[7vmax] text-black max_md:text-[16vmin]">
+					className="font-thin font-raleway leading-tight tracking-tight text-[7vmax] text-black max_md:text-[16vmin]">
 					{title}
 				</MotionTextEl>
+
 				<Breadcrumb />
 
 				<section className="w-full min-h-[100vh] mt-8">{children}</section>
