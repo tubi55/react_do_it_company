@@ -4,17 +4,13 @@
 //twMerge(기존 클래스, 덮어쓸 클래스)
 import { twMerge } from "tailwind-merge";
 
-function Thumbnail({ src = "", text = "alt text", shadow = true, className }) {
+// h_auto값이 true로 들어오면 자식 이미지요소의 원래 높이값을 활용 (부모높이의 100%사용하지 않음)
+// masonry ui연결할 때 필요
+function Thumbnail({ src = "", text = "alt text", shadow = true, className, h_auto = false }) {
 	return (
 		<figure className={twMerge("size-full transition-all relative", className)}>
-			{shadow && (
-				<img
-					className="translate-x-2 translate-y-2 pic blur-md z-400"
-					src={src}
-					alt={text}
-				/>
-			)}
-			<img className="pic" src={src} alt={text} />
+			{shadow && <img className={twMerge("translate-x-2 translate-y-2 pic blur-md z-400", h_auto && "!h-auto")} src={src} alt={text} />}
+			<img className={twMerge("pic", h_auto && "!h-auto")} src={src} alt={text} />
 		</figure>
 	);
 }
