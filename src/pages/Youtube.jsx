@@ -10,7 +10,7 @@ import MotionBox from "../components/MotionBox";
 import MotionTextEl from "../components/MotionTextEl";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCustomText } from "../hooks/useText";
 
 function Youtube() {
@@ -79,10 +79,12 @@ function Youtube() {
 					<MotionBox
 						delay={2.4}
 						className="w-[55%] h-[20vw] [&_img:first-child]:opacity-50 max_xl:w-full max_xl:mb-20 max_xl:h-[40vh] max_lg:h-[30vh] max_md:h-[20vh] max_sm:h-[14vh]">
-						<Thumbnail
-							src={Lists[0]?.snippet.thumbnails.standard.url}
-							className="size-full "
-						/>
+						<Link to={`/youtube/${Lists[0]?.id}`}>
+							<Thumbnail
+								src={Lists[0]?.snippet.thumbnails.standard.url}
+								className="size-full "
+							/>
+						</Link>
 					</MotionBox>
 
 					{/* information */}
@@ -198,14 +200,16 @@ function Youtube() {
 										: "col-span-2 "
 								)}>
 								{/* Video Thumb */}
-								<Thumbnail
-									src={data.snippet.thumbnails.standard.url}
-									shadow={true}
-									className={twMerge(
-										"w-full [&>*:first-child]:opacity-90 mb-6 max_lg:h-[20vw] max_md:h-[40vw] ",
-										idx === 0 || idx === 5 ? "h-[17vw]" : "h-[10vw]"
-									)}
-								/>
+								<Link to={`/youtube/${data.id}`}>
+									<Thumbnail
+										src={data.snippet.thumbnails.standard.url}
+										shadow={true}
+										className={twMerge(
+											"w-full [&>*:first-child]:opacity-90 mb-6 max_lg:h-[20vw] max_md:h-[40vw] ",
+											idx === 0 || idx === 5 ? "h-[17vw]" : "h-[10vw]"
+										)}
+									/>
+								</Link>
 
 								{/* Video Info */}
 								<div className="pb-6 border-b border-black/20">
