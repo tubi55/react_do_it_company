@@ -50,14 +50,24 @@ function Gallery() {
 					<Mask delay={delay + 0.2} />
 				</div>
 			</Intro>
+
 			<Content>
-				<div className="frame">
+				<div className="w-full ">
 					{Pics.map((pic, idx) => {
 						return (
-							<article key={idx}>
-								<Thumbnail src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} className="w-[25%]" h_auto={true} />
+							<article key={idx} className="w-[23%] mb-14 border-b border-black/40 max_2xl:w-[32%] max_lg:w-[48%] max_sm:w-[100%]">
+								<Thumbnail
+									src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+									className="w-full mb-1 [&_img:first-child]:opacity-50"
+									h_auto={true}
+								/>
 
-								<h2>{pic.title}</h2>
+								<h2 className="my-5 font-lg">{pic.title}</h2>
+
+								<div className="flex items-end w-full gap-3 mb-3">
+									<img className="w-10" src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt={pic.owner} />
+									<span>{pic.owner}</span>
+								</div>
 							</article>
 						);
 					})}
