@@ -175,8 +175,14 @@ function Gallery() {
 
 									<h2 className="my-5 font-lg">{pic.title}</h2>
 
+									{/* profile Box */}
 									<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
-										<img className="w-10" src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt={pic.owner} />
+										<img
+											className="w-10"
+											src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+											alt={pic.owner}
+											onError={e => e.target.setAttribute("src", "https://www.flickr.com/images/buddyicon.gif")}
+										/>
 										<span className="transition cursor-pointer hover:text-sky-600" onClick={handleUser}>
 											{pic.owner}
 										</span>
