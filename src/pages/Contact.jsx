@@ -5,7 +5,7 @@ import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 
 function Contact() {
-	const delay = 1.8;
+	const delay = 1.2;
 	return (
 		<Layout title={"CONTACT"}>
 			<Intro>
@@ -15,8 +15,7 @@ function Contact() {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { delay: 0 } }}
 						transition={{ duration: 0.05, delay: delay + 0.25 }}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores,
-						beatae.
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, beatae.
 					</motion.span>
 					<Mask delay={delay} />
 				</div>

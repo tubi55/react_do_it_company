@@ -8,7 +8,7 @@ import Thumbnail from "../components/Thumbnail";
 import Masonry from "react-masonry-component";
 
 function Gallery() {
-	const delay = 1.8;
+	const delay = 1.6;
 	const [Pics, setPics] = useState([]);
 
 	useEffect(() => {
@@ -67,7 +67,7 @@ function Gallery() {
 					initial={{ y: 100, opacity: 0 }}
 					animate={{ y: 0, opacity: 1 }}
 					exit={{ x: 100, opacity: 0, transition: { delay: 0 } }}
-					transition={{ duration: 1, delay: 2.4 }}>
+					transition={{ duration: 1, delay: delay + 0.4 }}>
 					<Masonry elementType={"div"} spacing={2} options={{ transitionDuration: 0.5 }} disableImagesLoaded={false} updateOnEachImageLoad={false}>
 						{Pics.map((pic, idx) => {
 							return (

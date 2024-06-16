@@ -14,12 +14,12 @@ function Layout({ title, children }) {
 			<main className="px-[10vw] pt-[22vh] pb-[5vh] flex justify-between flex-wrap max_md:pt-[16vh]">
 				<MotionTextEl
 					el={"h2"}
-					delay={0.7}
+					delay={0.5}
 					className={twMerge(
-						"font-thin font-raleway leading-tight tracking-tight text-[7vmax] text-black max_md:text-[16vmin]",
-						title?.length > 30 && "text-[5vmax] max_md:text-5xl leading-normal"
+						"font-thin font-raleway tracking-tight text-[7vmax] text-black/70 max_md:text-[16vmin] leading-none mb-4",
+						title?.length > 30 && "text-[5vmax] max_md:text-5xl"
 					)}>
-					{title}
+					{title?.toUpperCase()}
 				</MotionTextEl>
 
 				<Breadcrumb />

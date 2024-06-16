@@ -8,7 +8,7 @@ import { useCustomText } from "../hooks/useText";
 function Breadcrumb() {
 	const { pathname } = useLocation();
 	const arr = pathname.split("/").map(el => (el === "" ? (el = "HOME") : el));
-	const delay = 1.2;
+	const delay = 1;
 	const shortenText = useCustomText("shorten");
 
 	return (

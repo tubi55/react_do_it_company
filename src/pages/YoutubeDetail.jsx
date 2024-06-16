@@ -46,8 +46,7 @@ function YoutubeDetail() {
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0, transition: { delay: 0 } }}
 						transition={{ duration: 0.05, delay: delay + 0.25 }}>
-						Dolor sit lorem ipsum dolor sit amet Aspe riores ipsum dolor sit
-						amet consec, beatae ipsum dolor.
+						Dolor sit lorem ipsum dolor sit amet Aspe riores ipsum dolor sit amet consec, beatae ipsum dolor.
 					</motion.span>
 					<Mask delay={delay} />
 				</div>
@@ -66,20 +65,14 @@ function YoutubeDetail() {
 
 			<Content>
 				<MotionBox delay={1.8} className="w-full h-[70vh]">
-					<iframe
-						width="100%"
-						height="100%"
-						title="youtube"
-						src={`https://www.youtube.com/embed/${Data?.snippet.resourceId.videoId}`}></iframe>
+					<iframe width="100%" height="100%" title="youtube" src={`https://www.youtube.com/embed/${Data?.snippet.resourceId.videoId}`}></iframe>
 				</MotionBox>
 
 				<div className="flex flex-wrap justify-between py-20">
 					{/* description */}
 					<article className="w-[70%] max_lg:w-full max_lg:mb-20">
 						<h3 className="mb-10 text-3xl font-orbitron">Description</h3>
-						<p className="pr-20 text-sm border-r border-black/20 max_lg:pr-0 max_lg:border-r-0">
-							{Data?.snippet.description}
-						</p>
+						<p className="pr-20 text-sm border-r border-black/20 max_lg:pr-0 max_lg:border-r-0">{Data?.snippet.description}</p>
 					</article>
 
 					{/* stastics */}
@@ -89,12 +82,7 @@ function YoutubeDetail() {
 						<ul className="w-full [&_strong]:font-orbitron [&_strong]:font-semibold [&_strong]:text-xl [&_strong]:text-black/80 [&_strong]:tracking-wider [&>li]:mb-10 max_lg:flex max_lg:flex-wrap max_lg:justify-between max_sm:[&>li]:w-[47%]">
 							<li>
 								<div>DATE : </div>
-								<strong>
-									{changeText(
-										Data ? Data.snippet.publishedAt.split("T")[0] : "",
-										"."
-									)}
-								</strong>
+								<strong>{changeText(Data ? Data.snippet.publishedAt.split("T")[0] : "", ".")}</strong>
 							</li>
 							<li>
 								<div>LIKE : </div>
