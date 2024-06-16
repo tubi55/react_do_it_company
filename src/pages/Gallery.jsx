@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Content from "../components/Content";
 import Intro from "../components/Intro";
 import Layout from "../components/Layout";
@@ -6,34 +6,49 @@ import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import Thumbnail from "../components/Thumbnail";
 import Masonry from "react-masonry-component";
+import { LuSearch } from "react-icons/lu";
 
 function Gallery() {
 	const delay = 1.4;
 	const myID = "197119297@N02";
 	const [Pics, setPics] = useState([]);
 	let [IsUser, setIsUser] = useState(myID);
+	let [CurrentType, setCurrentType] = useState("mine");
 	const ref_btnSet = useRef(null);
 	const ref_frame = useRef(null);
+	const ref_input = useRef(null);
 
-	const fetchFlickr = async opt => {
-		const baseURL = "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
-		const key = import.meta.env.VITE_FLICKR_KEY;
-		const num = 40;
-		let url = "";
+	const fetchFlickr = useCallback(
+		async opt => {
+			const baseURL = "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
+			const key = import.meta.env.VITE_FLICKR_KEY;
+			const num = 40;
+			let url = "";
 
-		const method_user = "flickr.people.getPhotos";
-		const method_interest = "flickr.interestingness.getList";
+			const method_user = "flickr.people.getPhotos";
+			const method_interest = "flickr.interestingness.getList";
+			const method_search = "flickr.photos.search";
 
-		const url_interest = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
-		const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.id}`;
+			const url_interest = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+			const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.id}`;
+			const url_search = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.keyword}`;
 
-		opt.type === "user" && (url = url_user);
-		opt.type === "interest" && (url = url_interest);
+			opt.type === "user" && (url = url_user);
+			opt.type === "interest" && (url = url_interest);
+			opt.type === "search" && (url = url_search);
 
-		const data = await fetch(url);
-		const json = await data.json();
-		setPics(json.photos.photo);
-	};
+			const data = await fetch(url);
+			const json = await data.json();
+			if (json.photos.photo.length === 0) {
+				const [btnInterest, btnMine] = ref_btnSet.current.querySelectorAll("button");
+				CurrentType === "interest" && btnInterest.classList.add("on");
+				CurrentType === "mine" && btnMine.classList.add("on");
+				return alert("해당 검색어의 결과값이 없습니다.");
+			}
+			setPics(json.photos.photo);
+		},
+		[CurrentType]
+	);
 
 	const activateBtn = e => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
@@ -52,6 +67,7 @@ function Gallery() {
 		setIsUser("");
 		activateBtn(e);
 		fetchFlickr({ type: "interest" });
+		setCurrentType("interest");
 	};
 
 	const handleMine = e => {
@@ -61,6 +77,7 @@ function Gallery() {
 		setIsUser(myID);
 		activateBtn(e);
 		fetchFlickr({ type: "user", id: myID });
+		setCurrentType("mine");
 	};
 
 	const handleUser = e => {
@@ -69,6 +86,18 @@ function Gallery() {
 		setIsUser(e.target.innerText);
 		activateBtn(e);
 		fetchFlickr({ type: "user", id: e.target.innerText });
+		setCurrentType("user");
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		const tags = ref_input.current.value;
+		ref_input.current.value = "";
+		if (!tags.trim()) return;
+		setIsUser("");
+		activateBtn(e);
+		fetchFlickr({ type: "search", keyword: tags });
+		setCurrentType("search");
 	};
 
 	useEffect(() => {
@@ -76,7 +105,7 @@ function Gallery() {
 		setTimeout(() => {
 			ref_frame.current.classList.add("on");
 		}, 2000);
-	}, []);
+	}, [fetchFlickr]);
 
 	return (
 		<Layout title={"GALLERY"}>
@@ -105,19 +134,36 @@ function Gallery() {
 			</Intro>
 
 			<Content>
-				<article className="flex flex-wrap px-5 py-4 mb-10">
+				{/* control bar */}
+				<article className="flex flex-wrap justify-between px-5 py-4 mb-10">
+					{/* gallery type button */}
 					<nav className="w-[40%] flex gap-7" ref={ref_btnSet}>
-						<button className="btn_line" onClick={handleInterest}>
-							Interest Gallery
-						</button>
 						<button className="btn_line on" onClick={handleMine}>
 							My Gallery
 						</button>
+						<button className="btn_line" onClick={handleInterest}>
+							Interest Gallery
+						</button>
 					</nav>
+
+					{/* serach form */}
+					<form onSubmit={handleSubmit} className="relative flex items-center gap-2">
+						<input
+							type="text"
+							placeholder="Search Keyword"
+							ref={ref_input}
+							className="bg-transparent w-[200px] border-b border-black/50 px-2 py-2 pr-6 outline-none"
+						/>
+						<button className="absolute right-0 bg-transparent border-none cursor-pointer bottom-4">
+							<LuSearch fontSize={20} color={"#555"} />
+						</button>
+					</form>
 				</article>
 
+				{/* gallery list frame */}
 				<div ref={ref_frame} className="w-full transition opacity-0 translate-y-24 [&.on]:opacity-100 [&.on]:translate-y-0">
-					<Masonry elementType={"div"} spacing={2} options={{ transitionDuration: 0.5 }} disableImagesLoaded={false} updateOnEachImageLoad={false}>
+					{/* Masonry */}
+					<Masonry elementType={"div"} spacing={2} options={{ transitionDuration: "0.5s" }} disableImagesLoaded={false} updateOnEachImageLoad={false}>
 						{Pics.map((pic, idx) => {
 							return (
 								<article key={idx} className="w-[25%] mb-14  max_2xl:w-[33.333%] max_lg:w-[50%] max_sm:w-[100%] px-5">
