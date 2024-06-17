@@ -13,7 +13,7 @@ function Slogan() {
 					LEADING INOVATOR
 				</MotionTextEl>
 				<MotionTextEl el={"h2"} delay={delay + 0.2} className={titleStyle}>
-					UI/UX DESIGN
+					UI/UX DEVELOPER
 				</MotionTextEl>
 
 				<div className="mt-4">
