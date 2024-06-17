@@ -9,6 +9,7 @@ import Youtube from "./pages/Youtube";
 import YoutubeDetail from "./pages/YoutubeDetail";
 import Contact from "./pages/Contact";
 import Nav from "./components/Nav";
+import Join from "./pages/Join";
 
 function App() {
 	const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/youtube" element={<Youtube />} />
 					<Route path="/youtube/:id" element={<YoutubeDetail />} />
 					<Route path="/contact" element={<Contact />} />
+					<Route path="/join" element={<Join />} />
 				</Routes>
 			</AnimatePresence>
 

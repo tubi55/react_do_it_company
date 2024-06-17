@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaUserCheck, FaImages, FaYoutube, FaMapMarkerAlt } from "react-icons/fa";
+import { FaUserCheck, FaImages, FaYoutube, FaMapMarkerAlt, FaFileContract } from "react-icons/fa";
 import clsx from "clsx";
 
 function Gnb({ isMobile = false }) {
@@ -7,7 +7,8 @@ function Gnb({ isMobile = false }) {
 		{ name: "MEMBERS", ico: FaUserCheck },
 		{ name: "GALLERY", ico: FaImages },
 		{ name: "YOUTUBE", ico: FaYoutube },
-		{ name: "CONTACT", ico: FaMapMarkerAlt }
+		{ name: "CONTACT", ico: FaMapMarkerAlt },
+		{ name: "JOIN", ico: FaFileContract }
 	];
 	const { pathname } = useLocation();
 
