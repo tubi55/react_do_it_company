@@ -91,7 +91,7 @@
 		@apply block w-full mb-2;
 	}
 	.input {
-		@apply w-full px-5 py-2 transition bg-transparent border-b outline-none resize-none border-black/50;
+		@apply w-full py-2 transition bg-transparent border-b outline-none resize-none border-black/50;
 	}
 	.sub_title {
 		@apply relative pb-5 mb-20 text-4xl after:block after:w-14 after:h-[1px] after:bg-black/70 after:absolute after:bottom-0 after:left-0;

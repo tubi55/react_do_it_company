@@ -105,6 +105,9 @@ function Contact() {
 			level: 1
 		});
 
+		instance.current.setZoomable(false);
+		instance.current.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.LEFT);
+
 		//마커 객체에 지도 객체 연결
 		marker.setMap(instance.current);
 
@@ -167,19 +170,19 @@ function Contact() {
 							<div className="flex justify-between w-full mb-12 [&_span]:w-[45%] ">
 								<span>
 									<label className="label">Name</label>
-									<input type="text" name="user_name" id="nameEl" className="input" />
+									<input type="text" name="user_name" id="nameEl" className="input" placeholder="Enter yout name" />
 								</span>
 
 								<span>
 									<label className="label">Email</label>
-									<input type="email" name="user_email" id="emailEl" className="input" />
+									<input type="email" name="user_email" id="emailEl" className="input" placeholder="Enter your email " />
 								</span>
 							</div>
 
 							{/* lower message part */}
 							<div className="w-full mb-2">
 								<label className="label">Message</label>
-								<textarea name="message" id="msgEl" className="input" />
+								<textarea name="message" id="msgEl" className="input" placeholder="Enter your message" />
 							</div>
 
 							{/* button set */}
