@@ -4,7 +4,7 @@ import Content from "../components/Content";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 //npm install @emailjs/browser --save
@@ -42,6 +42,13 @@ function Contact() {
 			imgPos: { offset: new kakao.maps.Point(116, 99) }
 		}
 	]);
+
+	//지도위치를 중심으로 이동시키는 핸들러 함수 제작
+	const setCenter = useCallback(() => {
+		console.log("지도화면에서 마커 가운데 보정");
+		// 지도 중심을 이동 시킵니다
+		instance.current.setCenter(info.current[Index].latlng);
+	}, [Index]);
 
 	//reset form func
 	const resetForm = () => {
@@ -99,7 +106,16 @@ function Contact() {
 
 		//마커 객체에 지도 객체 연결
 		marker.setMap(instance.current);
-	}, [Index, kakao]);
+
+		//Contact페이지에만 동작되야 되는 핸들러함수를 최상위 객체인 window에 직접 연결했기 때문에
+		//라우터로 다른페이지이동하더라도 계속해서 setCenter호출되는 문제점 발생
+		//해결방법: Contact 컴포넌트가 언마운트시 강제로 윈도우객체에서 setCenter핸들러를 제거
+		window.addEventListener("resize", setCenter);
+
+		return () => {
+			window.removeEventListener("resize", setCenter);
+		};
+	}, [Index, kakao, setCenter]);
 
 	return (
 		<Layout title={"CONTACT"}>
