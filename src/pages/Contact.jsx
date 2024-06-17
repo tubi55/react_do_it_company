@@ -4,7 +4,7 @@ import Content from "../components/Content";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 //npm install @emailjs/browser --save
 
@@ -12,6 +12,21 @@ function Contact() {
 	const delay = 1.2;
 	const form = useRef(null);
 
+	const { kakao } = window;
+	const map = useRef(null);
+	const instance = useRef(null);
+
+	const info = useRef([
+		{
+			title: "삼성역 코엑스",
+			latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
+			imgSrc: "marker1.png",
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) }
+		}
+	]);
+
+	//reset form func
 	const resetForm = () => {
 		const nameForm = form.current.querySelector("#nameEl");
 		const mailForm = form.current.querySelector("#emailEl");
@@ -48,6 +63,22 @@ function Contact() {
 			);
 	};
 
+	useEffect(() => {
+		//위의 정보를 활용한 마커 객체 생성
+		const marker = new kakao.maps.Marker({
+			position: info.current[0].latlng,
+			image: new kakao.maps.MarkerImage(info.current[0].imgSrc, info.current[0].imgSize, info.current[0].imgPos)
+		});
+
+		instance.current = new kakao.maps.Map(map.current, {
+			center: info.current[0].latlng,
+			level: 1
+		});
+
+		//마커 객체에 지도 객체 연결
+		marker.setMap(instance.current);
+	}, []);
+
 	return (
 		<Layout title={"CONTACT"}>
 			<Intro>
@@ -76,7 +107,7 @@ function Contact() {
 
 			<Content>
 				{/* upper box */}
-				<article className="flex flex-wrap justify-between w-full my-24">
+				<article className="flex flex-wrap justify-between w-full my-24 max_lg:mb-60">
 					{/* mail form */}
 					<div className="w-1/2 pr-[8vw] mb-24 border-r border-black/30 max_lg:w-full max_lg:pr-0 max_lg:border-none">
 						<h2 className="sub_title">Send E-mail</h2>
@@ -123,6 +154,11 @@ function Contact() {
 							adipisicing elit.
 						</p>
 					</div>
+				</article>
+
+				{/* map box */}
+				<article id="map">
+					<div className="w-full h-[50vh] bg-black" ref={map}></div>
 				</article>
 			</Content>
 		</Layout>
