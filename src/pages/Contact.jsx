@@ -21,20 +21,14 @@ function Contact() {
 		msgForm.value = "";
 	};
 
-	//form mail 기능함수
+	//form mail func
 	const sendEmail = e => {
 		e.preventDefault();
-
 		const nameForm = form.current.querySelector("#nameEl");
 		const mailForm = form.current.querySelector("#emailEl");
 		const msgForm = form.current.querySelector("#msgEl");
 
 		if (!nameForm.value || !mailForm.value || !msgForm.value) return alert("사용자이름, 이메일주소, 문의내용은 필수 입력사항입니다.");
-
-		console.log(import.meta.env.VITE_SERVICE_ID);
-
-		//sendForm메서드는 각 키값을 문자열로만 인수로 전달되도록 type지정되어 있기 때문에
-		//변수를 `${}`로 감싸서 문자형식으로 전달
 
 		emailjs
 			.sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, form.current, {
@@ -82,43 +76,52 @@ function Contact() {
 
 			<Content>
 				{/* upper box */}
-				<article>
+				<article className="flex flex-wrap justify-between w-full my-24">
 					{/* mail form */}
-					<div>
-						<h2>Send E-Mail</h2>
+					<div className="w-1/2 pr-[8vw] mb-24 border-r border-black/30 max_lg:w-full max_lg:pr-0 max_lg:border-none">
+						<h2 className="sub_title">Send E-mail</h2>
+
 						<form ref={form} onSubmit={sendEmail}>
 							{/* upper name, eamil part */}
-							<div>
+							<div className="flex justify-between w-full mb-12 [&_span]:w-[45%] ">
 								<span>
-									<label>Name</label>
-									<input type="text" name="user_name" id="nameEl" />
+									<label className="label">Name</label>
+									<input type="text" name="user_name" id="nameEl" className="input" />
 								</span>
 
 								<span>
-									<label>Email</label>
-									<input type="email" name="user_email" id="emailEl" />
+									<label className="label">Email</label>
+									<input type="email" name="user_email" id="emailEl" className="input" />
 								</span>
 							</div>
 
 							{/* lower message part */}
-							<div>
-								<label>Message</label>
-								<textarea name="message" id="msgEl" />
+							<div className="w-full mb-2">
+								<label className="label">Message</label>
+								<textarea name="message" id="msgEl" className="input" />
 							</div>
 
 							{/* button set */}
-							<div>
-								<input type="reset" value="Cancel" />
-								<input type="submit" value="Send" />
+							<div className="flex gap-5 mt-7">
+								<input type="reset" value="Cancel" className="btn" />
+								<input type="submit" value="Send" className="btn" />
 							</div>
 						</form>
 					</div>
 
 					{/* info */}
-					<div>
-						<h2>Information</h2>
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit, id nesciunt? Dolores architecto quas voluptate dolorem impedit ab dolore,
-						itaque blanditiis iste esse delectus libero ipsum repudiandae porro nulla fuga.
+					<div className="w-1/2 pl-[8vw] max_lg:w-full max_lg:pl-0 ">
+						<h2 className="sub_title">Information</h2>
+						<p>
+							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit, id nesciunt? Dolores architecto quas voluptate dolorem impedit ab
+							dolore, itaque blanditiis iste esse delectus libero ipsum repudiandae porro nulla fuga.
+						</p>
+						<br />
+						<br />
+						<p>
+							Tempora recusandae veritatis corrupti corporis facere sunt ab minima quas asperiores sed. Lorem ipsum, dolor sit amet consectetur
+							adipisicing elit.
+						</p>
 					</div>
 				</article>
 			</Content>

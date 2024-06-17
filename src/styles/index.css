@@ -70,7 +70,7 @@
 	}
 	/* button style */
 	.btn {
-		@apply inline-flex items-center gap-2 px-8 py-3 text-sm text-white transition border-none rounded-md shadow-lg shadow-black/30 bg-black/90 hover:bg-cyan-500 hover:shadow-cyan-500/30;
+		@apply inline-flex items-center gap-2 px-8 py-3 text-sm text-white transition border-none rounded-md shadow-lg cursor-pointer shadow-black/30 bg-black/90 hover:bg-cyan-500 hover:shadow-cyan-500/30;
 	}
 	.btn_line {
 		@apply bg-transparent border-none cursor-pointer py-3 text-black/30 border-b border-black/30 relative transition after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-[0%] after:h-[1px] after:bg-black/50  after:transition-[width] [&.on]:text-black [&.on:after]:w-[100%];
@@ -84,6 +84,17 @@
 	/* mask frame style */
 	.mframe {
 		@apply relative inline-block overflow-hidden;
+	}
+
+	/* form style */
+	.label {
+		@apply block w-full mb-2;
+	}
+	.input {
+		@apply w-full px-5 py-2 transition bg-transparent border-b outline-none resize-none border-black/50;
+	}
+	.sub_title {
+		@apply relative pb-5 mb-20 text-2xl after:block after:w-14 after:h-[1px] after:bg-black/70 after:absolute after:bottom-0 after:left-0;
 	}
 }
 
