@@ -18,24 +18,25 @@ function Contact() {
 	const instance = useRef(null);
 
 	const [Index, setIndex] = useState(0);
+	const [Traffic, setTraffic] = useState(false);
 
 	const info = useRef([
 		{
-			title: "삼성역 코엑스",
+			title: "COEX",
 			latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
 			imgSrc: "marker1.png",
 			imgSize: new kakao.maps.Size(232, 99),
 			imgPos: { offset: new kakao.maps.Point(116, 99) }
 		},
 		{
-			title: "넥슨 본사",
+			title: "NEXON",
 			latlng: new kakao.maps.LatLng(37.40211707077346, 127.10344953763003),
 			imgSrc: "marker2.png",
 			imgSize: new kakao.maps.Size(232, 99),
 			imgPos: { offset: new kakao.maps.Point(116, 99) }
 		},
 		{
-			title: "서울 시청",
+			title: "CITY HALL",
 			latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
 			imgSrc: "marker3.png",
 			imgSize: new kakao.maps.Size(232, 99),
@@ -107,6 +108,10 @@ function Contact() {
 		//마커 객체에 지도 객체 연결
 		marker.setMap(instance.current);
 
+		//지도 타입 변경 UI추가
+		const mapTypeControl = new kakao.maps.MapTypeControl();
+		instance.current.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
 		//Contact페이지에만 동작되야 되는 핸들러함수를 최상위 객체인 window에 직접 연결했기 때문에
 		//라우터로 다른페이지이동하더라도 계속해서 setCenter호출되는 문제점 발생
 		//해결방법: Contact 컴포넌트가 언마운트시 강제로 윈도우객체에서 setCenter핸들러를 제거
@@ -116,6 +121,13 @@ function Contact() {
 			window.removeEventListener("resize", setCenter);
 		};
 	}, [Index, kakao, setCenter]);
+
+	useEffect(() => {
+		//traffic 값이 바뀔때마다 실행될 구문
+		Traffic
+			? instance.current.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
+			: instance.current.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+	}, [Traffic, kakao]);
 
 	return (
 		<Layout title={"CONTACT"}>
@@ -195,22 +207,37 @@ function Contact() {
 				</article>
 
 				{/* map box */}
-				<article id="map">
+				<article>
+					<h2 className="text-6xl font-thin sub_title">Location</h2>
+
+					{/* map frame */}
 					<div className="w-full h-[50vh] bg-black saturate-0 transition hover:saturate-100" ref={map}></div>
 
-					{/* 데이터기반으로 자동 버튼 생성 및 자동 이벤트 연결 처리 */}
-					<ul className="flex gap-2 mt-4 mb-40">
-						{info.current.map((el, idx) => (
-							<li
-								className={twMerge("btn opacity-70", Index === idx && "bg-cyan-400 shadow-cyan-400/30 opacity-100")}
-								key={idx}
-								onClick={() => {
-									setIndex(idx);
-								}}>
-								{el.title}
-							</li>
-						))}
-					</ul>
+					<nav className="flex flex-wrap justify-between mt-6 mb-60">
+						{/* 데이터기반으로 자동 버튼 생성 및 자동 이벤트 연결 처리 */}
+						<ul className="flex flex-wrap gap-2 max_md:mb-4">
+							{info.current.map((el, idx) => (
+								<li
+									className={twMerge("btn opacity-70", Index === idx && "bg-cyan-400 shadow-cyan-400/30 opacity-100")}
+									key={idx}
+									onClick={() => {
+										setIndex(idx);
+									}}>
+									{el.title}
+								</li>
+							))}
+						</ul>
+
+						{/* Traffic button */}
+						<div className="flex gap-2">
+							<button className={twMerge("btn", Traffic && "bg-pink-500 shadow-pink-500/30")} onClick={() => setTraffic(!Traffic)}>
+								{Traffic ? "Traffic OFF" : "Traffic ON"}
+							</button>
+							<button className="btn" onClick={setCenter}>
+								Reset Map
+							</button>
+						</div>
+					</nav>
 				</article>
 			</Content>
 		</Layout>
