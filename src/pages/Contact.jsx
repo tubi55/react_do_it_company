@@ -4,7 +4,8 @@ import Content from "../components/Content";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 //npm install @emailjs/browser --save
 
@@ -16,11 +17,27 @@ function Contact() {
 	const map = useRef(null);
 	const instance = useRef(null);
 
+	const [Index, setIndex] = useState(0);
+
 	const info = useRef([
 		{
 			title: "삼성역 코엑스",
 			latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
 			imgSrc: "marker1.png",
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) }
+		},
+		{
+			title: "넥슨 본사",
+			latlng: new kakao.maps.LatLng(37.40211707077346, 127.10344953763003),
+			imgSrc: "marker2.png",
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) }
+		},
+		{
+			title: "서울 시청",
+			latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
+			imgSrc: "marker3.png",
 			imgSize: new kakao.maps.Size(232, 99),
 			imgPos: { offset: new kakao.maps.Point(116, 99) }
 		}
@@ -66,18 +83,23 @@ function Contact() {
 	useEffect(() => {
 		//위의 정보를 활용한 마커 객체 생성
 		const marker = new kakao.maps.Marker({
-			position: info.current[0].latlng,
-			image: new kakao.maps.MarkerImage(info.current[0].imgSrc, info.current[0].imgSize, info.current[0].imgPos)
+			position: info.current[Index].latlng,
+			image: new kakao.maps.MarkerImage(info.current[Index].imgSrc, info.current[Index].imgSize, info.current[Index].imgPos)
 		});
 
+		//Index값이 변경될때마다 새로운 지도 레이어가 중첩되므로
+		//일단은 기존 map안의 모든 요소를 없애서 초기화
+		map.current.innerHTML = "";
+
+		//객체 정보를 활용한 지도 객체 생성
 		instance.current = new kakao.maps.Map(map.current, {
-			center: info.current[0].latlng,
+			center: info.current[Index].latlng,
 			level: 1
 		});
 
 		//마커 객체에 지도 객체 연결
 		marker.setMap(instance.current);
-	}, []);
+	}, [Index, kakao]);
 
 	return (
 		<Layout title={"CONTACT"}>
@@ -158,7 +180,21 @@ function Contact() {
 
 				{/* map box */}
 				<article id="map">
-					<div className="w-full h-[50vh] bg-black" ref={map}></div>
+					<div className="w-full h-[50vh] bg-black saturate-0 transition hover:saturate-100" ref={map}></div>
+
+					{/* 데이터기반으로 자동 버튼 생성 및 자동 이벤트 연결 처리 */}
+					<ul className="flex gap-2 mt-4 mb-40">
+						{info.current.map((el, idx) => (
+							<li
+								className={twMerge("btn opacity-70", Index === idx && "bg-cyan-400 shadow-cyan-400/30 opacity-100")}
+								key={idx}
+								onClick={() => {
+									setIndex(idx);
+								}}>
+								{el.title}
+							</li>
+						))}
+					</ul>
 				</article>
 			</Content>
 		</Layout>
