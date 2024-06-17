@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
+import MotionTextEl from "../components/MotionTextEl";
 
 //npm install @emailjs/browser --save
 
@@ -163,9 +164,17 @@ function Contact() {
 				<article className="flex flex-wrap justify-between w-full my-24 max_lg:mb-60">
 					{/* mail form */}
 					<div className="w-1/2 pr-[8vw] mb-24 border-r border-black/30 max_lg:w-full max_lg:pr-0 max_lg:border-none">
-						<h2 className="sub_title">Send E-mail</h2>
+						<MotionTextEl el="h2" delay={delay + 0.4} className="sub_title">
+							Send E-mail
+						</MotionTextEl>
 
-						<form ref={form} onSubmit={sendEmail}>
+						<motion.form
+							ref={form}
+							onSubmit={sendEmail}
+							initial={{ opacity: 0, y: 200 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: 200, transition: { delay: 0 } }}
+							transition={{ duration: 1, delay: delay + 0.8 }}>
 							{/* upper name, eamil part */}
 							<div className="flex justify-between w-full mb-12 [&_span]:w-[45%] ">
 								<span>
@@ -190,22 +199,32 @@ function Contact() {
 								<input type="reset" value="Cancel" className="btn" />
 								<input type="submit" value="Send" className="btn" />
 							</div>
-						</form>
+						</motion.form>
 					</div>
 
 					{/* info */}
 					<div className="w-1/2 pl-[8vw] max_lg:w-full max_lg:pl-0 ">
-						<h2 className="sub_title">Information</h2>
-						<p>
+						<MotionTextEl el="h2" delay={delay + 0.6} className="sub_title">
+							Information
+						</MotionTextEl>
+						<motion.p
+							initial={{ opacity: 0, y: 200 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: 200, transition: { delay: 0 } }}
+							transition={{ duration: 1, delay: delay + 1 }}>
 							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Velit, id nesciunt? Dolores architecto quas voluptate dolorem impedit ab
 							dolore, itaque blanditiis iste esse delectus libero ipsum repudiandae porro nulla fuga.
-						</p>
+						</motion.p>
 						<br />
 						<br />
-						<p>
+						<motion.p
+							initial={{ opacity: 0, y: 200 }}
+							animate={{ opacity: 1, y: 0 }}
+							exit={{ opacity: 0, y: 200, transition: { delay: 0 } }}
+							transition={{ duration: 1, delay: delay + 1.2 }}>
 							Tempora recusandae veritatis corrupti corporis facere sunt ab minima quas asperiores sed. Lorem ipsum, dolor sit amet consectetur
 							adipisicing elit.
-						</p>
+						</motion.p>
 					</div>
 				</article>
 
