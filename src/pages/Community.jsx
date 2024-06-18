@@ -57,6 +57,8 @@ function Community() {
 		}
 	];
 
+	useEffect(() => {}, []);
+
 	const getLocalData = () => {
 		const data = localStorage.getItem("post");
 		if (data) return JSON.parse(data);
