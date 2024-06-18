@@ -134,7 +134,7 @@
 		@apply absolute top-0 left-0 z-0 w-full h-full text-base bg-black;
 	}
 	.card {
-		@apply w-[31%] bg-white shadow-sm rounded p-6 mb-10 min-h-[30vh];
+		@apply w-[31%] bg-white shadow-sm rounded p-6 mb-10 min-h-[30vh]  max_md:w-[48%] max_sm:w-full;
 	}
 }
 

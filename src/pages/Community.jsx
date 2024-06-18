@@ -163,7 +163,7 @@ function Community() {
 			<Content>
 				<div className="flex flex-wrap justify-between w-full">
 					{/* input box */}
-					<div className="w-4/12 pr-32">
+					<div className="w-[4/12] pr-32 max_xl:w-full max_xl:pr-0 max_xl:mb-28">
 						<MotionTextEl el={"h2"} delay={delay + 0.4} className="mb-6 text-4xl font-thin">
 							Write Post
 						</MotionTextEl>
@@ -188,7 +188,7 @@ function Community() {
 					</div>
 
 					{/* show box */}
-					<div className="flex flex-wrap justify-between w-8/12 mb-52">
+					<div className="flex flex-wrap justify-between w-8/12 mb-52 max_xl:w-full">
 						<div className="w-full">
 							<MotionTextEl el={"h2"} delay={delay + 0.6} className="mb-6 text-4xl font-thin">
 								Post List
