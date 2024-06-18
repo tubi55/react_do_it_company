@@ -167,22 +167,28 @@ function Community() {
 						<MotionTextEl el={"h2"} delay={delay + 0.4} className="mb-6 text-4xl font-thin">
 							Write Post
 						</MotionTextEl>
-						<input ref={ref_input} type="text" className="mb-10 input" placeholder="제목을 입력하세요." />
-						<br />
-						<textarea ref={ref_textarea} className="input" cols="30" rows="3" placeholder="본문을 입력하세요."></textarea>
+						<motion.div
+							initial={{ opacity: 0, x: 100 }}
+							animate={{ opacity: 1, x: 0 }}
+							exit={{ opacity: 0, x: 100, transition: { delay: 0 } }}
+							transition={{ duration: 1, delay: delay + 0.6 }}>
+							<input ref={ref_input} type="text" className="mb-10 input" placeholder="제목을 입력하세요." />
+							<br />
+							<textarea ref={ref_textarea} className="input" cols="30" rows="3" placeholder="본문을 입력하세요."></textarea>
 
-						<nav className="flex gap-4 mt-6 btnSet">
-							<button className="rounded-sm btn" onClick={resetForm}>
-								cancel
-							</button>
-							<button className="rounded-sm btn" onClick={createPost}>
-								write
-							</button>
-						</nav>
+							<nav className="flex gap-4 mt-6 btnSet">
+								<button className="rounded-sm btn" onClick={resetForm}>
+									cancel
+								</button>
+								<button className="rounded-sm btn" onClick={createPost}>
+									write
+								</button>
+							</nav>
+						</motion.div>
 					</div>
 
 					{/* show box */}
-					<div className="flex flex-wrap justify-between w-8/12">
+					<div className="flex flex-wrap justify-between w-8/12 mb-52">
 						<div className="w-full">
 							<MotionTextEl el={"h2"} delay={delay + 0.6} className="mb-6 text-4xl font-thin">
 								Post List
@@ -227,7 +233,13 @@ function Community() {
 								//출력 모드 렌더링
 
 								return (
-									<article key={idx} className="flex flex-wrap items-between card">
+									<motion.article
+										key={idx}
+										className="flex flex-wrap items-between card"
+										initial={{ opacity: 0, y: 100 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: 100, transition: { delay: 0 } }}
+										transition={{ duration: 0.3, delay: delay + 0.6 + 0.2 * idx }}>
 										<div>
 											<h2 className="pb-4 mb-4 text-2xl font-thin border-b border-black/30">{post.title}</h2>
 											<p className="mb-12 text-black/60">{post.content}</p>
@@ -245,7 +257,7 @@ function Community() {
 												</button>
 											</nav>
 										</div>
-									</article>
+									</motion.article>
 								);
 							}
 						})}
