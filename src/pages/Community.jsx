@@ -4,10 +4,37 @@ import Intro from "../components/Intro";
 import Layout from "../components/Layout";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
+import MotionTextEl from "../components/MotionTextEl";
+import { FaEdit, FaRegTrashAlt, FaUndo } from "react-icons/fa";
 
 function Community() {
 	const delay = 1;
 	const dummyData = [
+		{
+			title: "title9",
+			content: "Here comes content description in detail4.",
+			data: new Date()
+		},
+		{
+			title: "title8",
+			content: "Here comes content description in detail4.",
+			data: new Date()
+		},
+		{
+			title: "title7",
+			content: "Here comes content description in detail4.",
+			data: new Date()
+		},
+		{
+			title: "title6",
+			content: "Here comes content description in detail4.",
+			data: new Date()
+		},
+		{
+			title: "title5",
+			content: "Here comes content description in detail4.",
+			data: new Date()
+		},
 		{
 			title: "title4",
 			content: "Here comes content description in detail4.",
@@ -53,7 +80,6 @@ function Community() {
 			resetForm();
 			return alert("제목과 본문을 모두 입력하세요.");
 		}
-		//기존 Posts 배열값을 Deep copy해서 가져온뒤, 그 뒤에 추가로 방금 입력한 객체를 배열에 추가
 		setPosts([
 			{
 				title: ref_input.current.value,
@@ -67,20 +93,14 @@ function Community() {
 
 	const deletePost = delIndex => {
 		if (window.confirm("정말 해당 게시글을 삭제하겠습니까?")) {
-			//기존 Posts배열을 반복 돌면서 인수로 전달된 삭제 순번값과 현재 반복되는 배열의 순번값이 같지 않은 것만 리턴
 			setPosts(Posts.filter((_, idx) => delIndex !== idx));
 		}
 	};
 
-	//해당 글을 수정모드로 변경시키는 함수
 	const enableUpdate = editIndex => {
-		//수정모드 함수 호출시 Allowed가 true가 아니면 return으로 함수 강제 종료
 		if (!Allowed) return;
-		//일단 수정모드에 진입하면 강제로 Allowed값을 false로 변경해서 다른 글 수정모드 진입금지 처리
 		setAllowed(false);
 		setPosts(
-			//Posts 배열값을 반복돌면서 인수로 전달된 수정할 포스트의 순번값과 현재 반복도는 배열의 포스트 순번값이 일치하면
-			//해당 글을 수정처리해야되므로 해당 객체에 enableUpdate=true값을 추가
 			Posts.map((post, idx) => {
 				if (editIndex === idx) post.enableUpdate = true;
 				return post;
@@ -88,7 +108,6 @@ function Community() {
 		);
 	};
 
-	//해당 글을 출력모드로 변경시키는 함수
 	const disableUpdate = editIndex => {
 		setAllowed(true);
 		setPosts(
@@ -99,10 +118,7 @@ function Community() {
 		);
 	};
 
-	//실제 글 수정하는 함수
 	const updatePost = updateIndex => {
-		//setPosts로 기존 Post배열같은 덮어쓰기해서 변경
-		//리액트에서는 참조형 자료는 무조건 배열값을 Deep copy한뒤 변경
 		setPosts(
 			Posts.map((post, idx) => {
 				if (updateIndex === idx) {
@@ -145,73 +161,95 @@ function Community() {
 			</Intro>
 
 			<Content>
-				<div className="inputBox">
-					<input ref={ref_input} type="text" placeholder="제목을 입력하세요." />
-					<br />
-					<textarea ref={ref_textarea} cols="30" rows="3" placeholder="본문을 입력하세요."></textarea>
+				<div className="flex flex-wrap justify-between w-full">
+					{/* input box */}
+					<div className="w-4/12 pr-32">
+						<MotionTextEl el={"h2"} delay={delay + 0.4} className="mb-6 text-4xl font-thin">
+							Write Post
+						</MotionTextEl>
+						<input ref={ref_input} type="text" className="mb-10 input" placeholder="제목을 입력하세요." />
+						<br />
+						<textarea ref={ref_textarea} className="input" cols="30" rows="3" placeholder="본문을 입력하세요."></textarea>
 
-					<nav className="btnSet">
-						<button onClick={resetForm}>cancel</button>
-						<button onClick={createPost}>write</button>
-					</nav>
-				</div>
+						<nav className="flex gap-4 mt-6 btnSet">
+							<button className="rounded-sm btn" onClick={resetForm}>
+								cancel
+							</button>
+							<button className="rounded-sm btn" onClick={createPost}>
+								write
+							</button>
+						</nav>
+					</div>
 
-				<div className="showBox">
-					{Posts.map((post, idx) => {
-						const string = JSON.stringify(post.data);
+					{/* show box */}
+					<div className="flex flex-wrap justify-between w-8/12">
+						<div className="w-full">
+							<MotionTextEl el={"h2"} delay={delay + 0.6} className="mb-6 text-4xl font-thin">
+								Post List
+							</MotionTextEl>
+						</div>
 
-						const [year, month, date] = string.split("T")[0].split('"')[1].split("-");
+						{Posts.map((post, idx) => {
+							const string = JSON.stringify(post.data);
+							const [year, month, date] = string.split("T")[0].split('"')[1].split("-");
 
-						let [hour, min, sec] = string.split("T")[1].split(".")[0].split(":");
-						hour = parseInt(hour) + 9;
-						hour >= 24 && (hour = hour - 24);
+							if (post.enableUpdate) {
+								//수정 모드 렌더링
+								return (
+									<article key={idx} className="flex flex-wrap card items-between">
+										<div>
+											<input className="text-2xl input" type="text" defaultValue={post.title} ref={ref_editInput} />
+											<br />
+											<textarea
+												//react에서 value속성을 적용하려면 무조건 onChange이벤트 연결 필수
+												//onChange이벤트 연결하지 않을때에는 value가닌 defaultValue속성 적용
+												defaultValue={post.content}
+												ref={ref_editTextarea}
+												className="input min-h-[12vh] mt-3 text-base text-sky-500"
+											/>
+										</div>
+										<nav className="flex items-end justify-end w-full gap-4">
+											<button className="text-lg transition text-black/50 hover:text-black/90 hover:scale-150" onClick={() => disableUpdate(idx)}>
+												<FaUndo />
+											</button>
+											<button
+												className="text-xl transition text-black/50 hover:text-black/90 hover:scale-150"
+												onClick={() => {
+													updatePost(idx);
+													disableUpdate(idx);
+												}}>
+												<FaEdit />
+											</button>
+										</nav>
+									</article>
+								);
+							} else {
+								//출력 모드 렌더링
 
-						if (post.enableUpdate) {
-							//수정 모드 렌더링
-							return (
-								<article key={idx}>
-									<div className="txt">
-										<input type="text" defaultValue={post.title} ref={ref_editInput} />
-										<br />
-										<textarea
-											//react에서 value속성을 적용하려면 무조건 onChange이벤트 연결 필수
-											//onChange이벤트 연결하지 않을때에는 value가닌 defaultValue속성 적용
-											defaultValue={post.content}
-											ref={ref_editTextarea}
-										/>
-									</div>
-									<nav className="btnSet">
-										<button onClick={() => disableUpdate(idx)}>Cancel</button>
-										<button
-											onClick={() => {
-												updatePost(idx);
-												disableUpdate(idx);
-											}}>
-											Update
-										</button>
-									</nav>
-								</article>
-							);
-						} else {
-							//출력 모드 렌더링
+								return (
+									<article key={idx} className="flex flex-wrap items-between card">
+										<div>
+											<h2 className="pb-4 mb-4 text-2xl font-thin border-b border-black/30">{post.title}</h2>
+											<p className="mb-12 text-black/60">{post.content}</p>
+										</div>
 
-							return (
-								<article key={idx}>
-									<div className="txt">
-										<h2>{post.title}</h2>
-										<p>{post.content}</p>
-										<p>{`글 작성일 : ${year}-${month}-${date}`}</p>
-										<p>{`글 작성시간 : ${hour}:${min}:${sec}`}</p>
-									</div>
+										<div className="flex flex-wrap items-end justify-between w-full text-sm">
+											<p className="text-[11px] font-orbitron tracking-widest text-sky-500">{`${year}.${month}.${date}`}</p>
 
-									<nav className="btnSet">
-										<button onClick={() => enableUpdate(idx)}>Edit</button>
-										<button onClick={() => deletePost(idx)}>Delete</button>
-									</nav>
-								</article>
-							);
-						}
-					})}
+											<nav className="flex gap-3 ">
+												<button onClick={() => enableUpdate(idx)} className="text-xl transition text-black/50 hover:text-black/90 hover:scale-150">
+													<FaEdit />
+												</button>
+												<button onClick={() => deletePost(idx)} className="text-xl transition text-black/50 hover:text-black/90 hover:scale-150">
+													<FaRegTrashAlt />
+												</button>
+											</nav>
+										</div>
+									</article>
+								);
+							}
+						})}
+					</div>
 				</div>
 			</Content>
 		</Layout>
