@@ -7,6 +7,11 @@ import { motion } from "framer-motion";
 import { useDebounce } from "../hooks/useDebounce";
 import MotionTextEl from "../components/MotionTextEl";
 
+//해당 컴포넌트에 메모리 누수 콘솔오류가 뜨는 이유 (memory leak);
+//Errs스테이트에 값이 담기는 시점이 useDebounce에 의해서 0.5초 이후인데
+//Members 컴포넌트 접속하자마자 0.5초안에 다른 페이지로 넘어가면
+//아직 state에 값이 담기지 않았는데 unmount된 경우이므로 뜨는 오류
+//컴포넌트 unmount시 값을 Mounted값을 false로 변경해주고 해당 값이 true일때에만 state변경처리
 function Join() {
 	const delay = 1;
 	const initVal = {
