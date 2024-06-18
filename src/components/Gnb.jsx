@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaUserCheck, FaImages, FaYoutube, FaMapMarkerAlt, FaFileContract } from "react-icons/fa";
+import { FaUserCheck, FaImages, FaYoutube, FaMapMarkerAlt, FaFileContract, FaCommentAlt } from "react-icons/fa";
 import clsx from "clsx";
 
 function Gnb({ isMobile = false }) {
 	const menuData = [
 		{ name: "MEMBERS", ico: FaUserCheck },
+		{ name: "COMMUNITY", ico: FaCommentAlt },
 		{ name: "GALLERY", ico: FaImages },
 		{ name: "YOUTUBE", ico: FaYoutube },
 		{ name: "CONTACT", ico: FaMapMarkerAlt },
@@ -12,7 +13,7 @@ function Gnb({ isMobile = false }) {
 	];
 	const { pathname } = useLocation();
 
-	const webStyle = "flex items-center gap-20 text-sm font-semibold max_xl:gap-12 max_lg:hidden";
+	const webStyle = "flex items-center gap-16 text-sm font-semibold max_xl:gap-12 max_lg:hidden";
 	const mobileStyle = "flex flex-wrap w-full";
 	const mobileListStyle =
 		"w-full px-10 py-7 border-t-2 border-b border-t-white/60 border-b-black/10 content-center text-black/70 font-semibold text-base";

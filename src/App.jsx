@@ -10,6 +10,7 @@ import YoutubeDetail from "./pages/YoutubeDetail";
 import Contact from "./pages/Contact";
 import Nav from "./components/Nav";
 import Join from "./pages/Join";
+import Community from "./pages/Community";
 
 function App() {
 	const location = useLocation();
@@ -22,6 +23,7 @@ function App() {
 				<Routes location={location} key={location.pathname}>
 					<Route path="/" element={<Home />} />
 					<Route path="/members" element={<Members />} />
+					<Route path="/community" element={<Community />} />
 					<Route path="/gallery" element={<Gallery />} />
 					<Route path="/youtube" element={<Youtube />} />
 					<Route path="/youtube/:id" element={<YoutubeDetail />} />
