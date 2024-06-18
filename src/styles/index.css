@@ -67,10 +67,10 @@
 		@apply w-full border-t-2 border-b-2 border-black text-black/50;
 
 		th {
-			@apply w-3/12 py-4 pl-2 font-semibold text-left border-b border-black/10;
+			@apply w-3/12 py-4 pl-2 font-semibold text-left border-b border-black/10 max_sm:hidden;
 
 			&:last-child {
-				@apply text-center;
+				@apply text-center max_sm:flex max_sm:w-full max_sm:justify-center;
 
 				input {
 					@apply mx-4 btn;
@@ -79,13 +79,13 @@
 		}
 
 		td {
-			@apply py-4 border-b border-l border-black/10 px-7;
+			@apply py-4 border-b border-l border-black/10 px-7 max_sm:border-l-0 max_sm:px-0;
 
 			input[type="text"],
 			input[type="password"],
 			textarea,
 			select {
-				@apply w-9/12 border border-black/10 bg-white resize-none px-3 py-1.5 rounded text-xs;
+				@apply w-9/12 border border-black/10 bg-white resize-none px-3 py-1.5 rounded text-xs max_lg:w-full;
 			}
 			input[type="checkbox"],
 			input[type="radio"] {
