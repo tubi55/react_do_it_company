@@ -23,7 +23,7 @@ export default function Modal({ IsOpen, setIsOpen, children }) {
 						{children}
 					</motion.div>
 					<motion.span
-						className="cursor-pointer absolute top-[3vw] right-[3vw] font-semibold"
+						className="cursor-pointer absolute bottom-[4vw] right-[4vw] font-semibold"
 						onClick={() => setIsOpen(false)}
 						initial={{ opacity: 0, x: 200 }}
 						animate={{ opacity: 1, x: 0, transition: { delay: 1.2 } }}

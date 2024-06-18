@@ -146,7 +146,7 @@ function Gallery() {
 					{/* control bar */}
 					<article className="flex flex-wrap justify-between px-5 py-4 mb-10">
 						{/* gallery type button */}
-						<nav className="w-[40%] flex gap-7" ref={ref_btnSet}>
+						<nav className="w-[40%] flex gap-7 max_md:w-full max_md:mb-8" ref={ref_btnSet}>
 							<button className="btn_line on" onClick={handleMine}>
 								My Gallery
 							</button>
@@ -156,14 +156,14 @@ function Gallery() {
 						</nav>
 
 						{/* serach form */}
-						<form onSubmit={handleSubmit} className="relative flex items-center gap-2">
+						<form onSubmit={handleSubmit} className="relative flex items-center gap-2 max_sm:w-full">
 							<input
 								type="text"
 								placeholder="Search Keyword"
 								ref={ref_input}
-								className="bg-transparent w-[200px] border-b border-black/50 px-2 py-2 pr-6 outline-none"
+								className="bg-transparent w-[200px] border-b border-black/50 px-2 py-2 pr-6 outline-none max_sm:w-full"
 							/>
-							<button className="absolute right-0 bg-transparent border-none cursor-pointer bottom-4">
+							<button className="absolute right-0 bg-transparent border-none cursor-pointer bottom-4 max_sm:bottom-2">
 								<LuSearch fontSize={20} color={"#555"} />
 							</button>
 						</form>
