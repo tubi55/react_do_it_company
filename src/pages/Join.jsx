@@ -139,7 +139,7 @@ function Join() {
 				<form onSubmit={handleSubmit}>
 					<fieldset className="flex flex-wrap justify-between w-full mt-36">
 						<legend className="hidden">form for signup</legend>
-						<div className="w-2/5 pr-20 text-right max_lg:w-full max_lg:mb-16 max_lg:pr-0">
+						<div className="w-2/6 pr-20 text-right max_lg:w-full max_lg:mb-16 max_lg:pr-0">
 							<MotionTextEl el={"h2"} delay={delay + 0.5} className="mb-4 text-4xl font-thin font-orbitron">
 								JOIN OUR GROUP
 							</MotionTextEl>
@@ -155,7 +155,7 @@ function Join() {
 						</div>
 
 						<motion.div
-							className="w-3/5 mb-48 max_lg:w-full"
+							className="w-4/6 mb-48 max_lg:w-full"
 							initial={{ opacity: 0, y: 100 }}
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: 100, transition: { delay: 0 } }}

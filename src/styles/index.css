@@ -85,7 +85,7 @@
 			input[type="password"],
 			textarea,
 			select {
-				@apply w-9/12 border border-black/10 bg-white resize-none px-3 py-1.5 rounded text-xs max_lg:w-full;
+				@apply w-9/12 border border-black/10 bg-white resize-none px-3 py-1.5 rounded text-xs max_xl:w-full;
 			}
 			input[type="checkbox"],
 			input[type="radio"] {
