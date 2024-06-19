@@ -17,18 +17,18 @@ function Nav() {
 			<AnimatePresence>
 				{MobileMenu && (
 					<motion.aside
-						className="fixed top-0 left-0 z-50 flex flex-wrap content-end h-screen shadow-xl w-80 bg-white/50 backdrop-blur"
+						className="fixed top-0 left-0 z-50 flex flex-wrap content-end h-screen shadow-xl w-80 bg-white/50 backdrop-blur-lg"
 						initial={{ x: -320, opacity: 0 }}
 						animate={{ x: 0, opacity: 1 }}
 						exit={{ x: -320, opacity: 0, transition: { delay: 0 } }}
 						transiiton={{ duration: 0.5 }}
 						onClick={() => setMobileMenu(false)}>
-						<article className="w-full h-[50%] p-10 border-b border-b-black/10 ">
+						<article className="w-full h-[35%] p-10 border-b border-b-black/10 ">
 							<div>
-								<h1 className="mb-4 text-4xl font-black">
+								<h1 className="mb-4 text-4xl font-bold font-orbitron">
 									<Link to="/">DCODELAB</Link>
 								</h1>
-								<p className="text-xs">Lorem ipsum dolor sit, amet consectetur adipisicing.</p>
+								<p className="text-xs opacity-50">Lorem ipsum dolor sit, amet consectetur adipisicing.</p>
 							</div>
 							<Utils isMobile={true} />
 						</article>

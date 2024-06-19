@@ -10,7 +10,7 @@ function Utils({ isMobile = false }) {
 	];
 
 	const webStyle = "flex gap-6 text-sm max_2xl:hidden";
-	const mobileStyle = "flex gap-5 mt-16";
+	const mobileStyle = "flex gap-5 mt-16 opacity-60";
 
 	return (
 		<ul className={clsx(isMobile ? mobileStyle : webStyle)}>

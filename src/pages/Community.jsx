@@ -71,6 +71,8 @@ function Community() {
 	const ref_editTextarea = useRef(null);
 	const [Posts, setPosts] = useState(getLocalData());
 	const [Allowed, setAllowed] = useState(true);
+	//초기에는 포스트박스의 딜레이 모션이 있어야 하므로 true
+	const [Delayed, setDelayed] = useState(true);
 
 	const resetForm = () => {
 		ref_input.current.value = "";
@@ -102,6 +104,8 @@ function Community() {
 	const enableUpdate = editIndex => {
 		if (!Allowed) return;
 		setAllowed(false);
+		//수정모드에서 다시 출력 모드로 변경시 딜레이 없도록 state값 변경
+		setDelayed(false);
 		setPosts(
 			Posts.map((post, idx) => {
 				if (editIndex === idx) post.enableUpdate = true;
@@ -137,7 +141,7 @@ function Community() {
 	}, [Posts]);
 
 	return (
-		<Layout title={"COMMUNITY"}>
+		<Layout title={"POSTS"}>
 			<Intro>
 				<div className="mframe">
 					<motion.span
@@ -165,7 +169,7 @@ function Community() {
 			<Content>
 				<div className="flex flex-wrap justify-between w-full">
 					{/* input box */}
-					<div className="w-[4/12] pr-32 max_xl:w-full max_xl:pr-0 max_xl:mb-28">
+					<div className="w-[35%] pr-32 max_xl:w-full max_xl:pr-0 max_xl:mb-28">
 						<MotionTextEl el={"h2"} delay={delay + 0.4} className="mb-6 text-4xl font-thin">
 							Write Post
 						</MotionTextEl>
@@ -190,7 +194,7 @@ function Community() {
 					</div>
 
 					{/* show box */}
-					<div className="flex flex-wrap justify-between w-8/12 mb-52 max_xl:w-full">
+					<div className="flex flex-wrap justify-between w-[65%] mb-52 max_xl:w-full">
 						<div className="w-full">
 							<MotionTextEl el={"h2"} delay={delay + 0.6} className="mb-6 text-4xl font-thin">
 								Post List
@@ -241,7 +245,8 @@ function Community() {
 										initial={{ opacity: 0, y: 100 }}
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, y: 100, transition: { delay: 0 } }}
-										transition={{ duration: 0.3, delay: delay + 0.6 + 0.2 * idx }}>
+										//Delayed(true): 초기 렌더링 상태이므로 지연시간 적용 / Delayed(false): 이미 렌더링 후 수정모드에서 출력모드로의 변환이기 때문에 지연시간 0으로 초기화
+										transition={{ duration: 0.3, delay: Delayed ? delay + 0.6 + 0.2 * idx : 0 }}>
 										<div>
 											<h2 className="pb-4 mb-4 text-2xl font-thin border-b border-black/30">{post.title}</h2>
 											<p className="mb-12 text-black/60">{post.content}</p>

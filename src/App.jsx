@@ -23,7 +23,7 @@ function App() {
 				<Routes location={location} key={location.pathname}>
 					<Route path="/" element={<Home />} />
 					<Route path="/members" element={<Members />} />
-					<Route path="/community" element={<Community />} />
+					<Route path="/posts" element={<Community />} />
 					<Route path="/gallery" element={<Gallery />} />
 					<Route path="/youtube" element={<Youtube />} />
 					<Route path="/youtube/:id" element={<YoutubeDetail />} />

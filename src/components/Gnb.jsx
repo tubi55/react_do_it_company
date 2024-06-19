@@ -5,7 +5,7 @@ import clsx from "clsx";
 function Gnb({ isMobile = false }) {
 	const menuData = [
 		{ name: "MEMBERS", ico: FaUserCheck },
-		{ name: "COMMUNITY", ico: FaCommentAlt },
+		{ name: "POSTS", ico: FaCommentAlt },
 		{ name: "GALLERY", ico: FaImages },
 		{ name: "YOUTUBE", ico: FaYoutube },
 		{ name: "CONTACT", ico: FaMapMarkerAlt },
@@ -14,9 +14,9 @@ function Gnb({ isMobile = false }) {
 	const { pathname } = useLocation();
 
 	const webStyle = "flex items-center gap-16 text-sm font-semibold max_xl:gap-12 max_lg:hidden";
-	const mobileStyle = "flex flex-wrap w-full";
+	const mobileStyle = "flex flex-wrap w-full h-[40%]";
 	const mobileListStyle =
-		"w-full px-10 py-7 border-t-2 border-b border-t-white/60 border-b-black/10 content-center text-black/70 font-semibold text-base";
+		"w-[50%] h-[33.333%] border-t border-t-white border-b border-b-black/10 odd:border-r border-r-black/10 even:border-l border-l-white flex flex-wrap items-center justify-center ";
 
 	return (
 		<ul className={clsx(isMobile ? mobileStyle : webStyle)}>
@@ -28,7 +28,8 @@ function Gnb({ isMobile = false }) {
 							style={{
 								color: data.name.toLowerCase() === pathname.substring(1) ? "rgba(0,0,0)" : "rgba(0,0,0,0.5)"
 							}}>
-							{isMobile && <data.ico className="inline-block -translate-y-[2px] mr-3" />} {data.name}
+							{isMobile && <data.ico className="block mx-auto mb-1 text-2xl text-black/80 drop-shadow-lg" />}{" "}
+							<span className="text-sm">{data.name}</span>
 						</Link>
 					</li>
 				);
