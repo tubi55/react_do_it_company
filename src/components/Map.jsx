@@ -103,7 +103,7 @@ function Map() {
 			<h2 className="text-6xl font-thin sub_title">Location</h2>
 
 			{/* map frame */}
-			<figure className="w-full h-[70vh] bg-black saturate-0 transition hover:saturate-100 relative">
+			<figure className="w-full h-[32vw] max_xl:h-[50vw] max_md:h-[50vh] bg-black saturate-0 transition hover:saturate-100 relative">
 				<div className={twMerge("inner", IsMap ? "opacity-100 z-50" : "opacity-0 z-0")} ref={map}></div>
 				<div className={twMerge("inner", !IsMap ? "opacity-100 z-50" : "opacity-0 z-0")} ref={view}></div>
 			</figure>
