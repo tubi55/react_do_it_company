@@ -111,7 +111,7 @@ function Map() {
 			{/* controll button set */}
 			<nav className="flex flex-wrap justify-between mt-6 mb-60">
 				{/* branch button */}
-				<ul className="flex flex-wrap gap-2 max_md:mb-4">
+				<ul className="flex flex-wrap gap-2 max_lg:mb-4">
 					{info.current.map((el, idx) => (
 						<li
 							className={twMerge("btn opacity-70", Index === idx && "bg-cyan-400 shadow-cyan-400/30 opacity-100")}
