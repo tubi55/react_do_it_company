@@ -208,7 +208,14 @@ function Community() {
 							if (post.enableUpdate) {
 								//수정 모드 렌더링
 								return (
-									<article key={idx} className="flex flex-wrap card items-between">
+									<motion.article
+										key={idx}
+										className="flex flex-wrap card items-between"
+										initial={{ opacity: 0, y: 100 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: 100, transition: { delay: 0 } }}
+										//Delayed(true): 초기 렌더링 상태이므로 지연시간 적용 / Delayed(false): 이미 렌더링 후 수정모드에서 출력모드로의 변환이기 때문에 지연시간 0으로 초기화
+										transition={{ duration: 0.3, delay: Delayed ? delay + 0.6 + 0.2 * idx : 0 }}>
 										<div>
 											<input className="text-2xl input" type="text" defaultValue={post.title} ref={ref_editInput} />
 											<br />
@@ -233,7 +240,7 @@ function Community() {
 												<FaEdit />
 											</button>
 										</nav>
-									</article>
+									</motion.article>
 								);
 							} else {
 								//출력 모드 렌더링
