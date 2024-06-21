@@ -116,6 +116,12 @@ function Gallery() {
 		}, 2000);
 	}, []);
 
+	useEffect(() => {
+		setTimeout(() => {
+			ref_frame.current.classList.add("on");
+		}, 2000);
+	}, [Pics]);
+
 	return (
 		<>
 			<Layout title={"GALLERY"}>
