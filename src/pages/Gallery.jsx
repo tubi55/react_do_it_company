@@ -5,9 +5,10 @@ import Layout from "../components/Layout";
 import Mask from "../components/Mask";
 import { motion } from "framer-motion";
 import Thumbnail from "../components/Thumbnail";
-import Masonry from "react-masonry-component";
 import { LuSearch } from "react-icons/lu";
 import Modal from "../components/Modal";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+//npm install react-responsive-masonry --save
 
 function Gallery() {
 	const delay = 1.4;
@@ -172,40 +173,37 @@ function Gallery() {
 					{/* gallery list frame */}
 					<div ref={ref_frame} className="w-full transition opacity-0 translate-y-24 [&.on]:opacity-100 [&.on]:translate-y-0">
 						{/* Masonry */}
-						<Masonry
-							elementType={"div"}
-							spacing={2}
-							options={{ transitionDuration: "0.5s" }}
-							disableImagesLoaded={false}
-							updateOnEachImageLoad={false}>
-							{Pics.map((pic, idx) => {
-								return (
-									<article key={idx} className="w-[25%] mb-14  max_2xl:w-[33.333%] max_lg:w-[50%] max_sm:w-[100%] px-5 cursor-pointer">
-										<Thumbnail
-											src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-											className="w-full mb-1 [&_img:first-child]:opacity-70"
-											h_auto={true}
-											onClick={() => handleModal(idx)}
-										/>
-
-										<h2 className="my-5 font-lg">{pic.title}</h2>
-
-										{/* profile Box */}
-										<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
-											<img
-												className="w-10"
-												src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
-												alt={pic.owner}
-												onError={e => e.target.setAttribute("src", "https://www.flickr.com/images/buddyicon.gif")}
+						<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 780: 2, 1000: 3, 1500: 4 }}>
+							<Masonry gutter="40px">
+								{Pics.map((pic, idx) => {
+									return (
+										<article key={idx} className="w-full mb-5 cursor-pointer">
+											<Thumbnail
+												src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+												className="w-full mb-1 [&_img:first-child]:opacity-70"
+												h_auto={true}
+												onClick={() => handleModal(idx)}
 											/>
-											<span className="transition cursor-pointer hover:text-sky-600" onClick={handleUser}>
-												{pic.owner}
-											</span>
-										</div>
-									</article>
-								);
-							})}
-						</Masonry>
+
+											<h2 className="my-5 font-lg">{pic.title}</h2>
+
+											{/* profile Box */}
+											<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
+												<img
+													className="w-10"
+													src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+													alt={pic.owner}
+													onError={e => e.target.setAttribute("src", "https://www.flickr.com/images/buddyicon.gif")}
+												/>
+												<span className="transition cursor-pointer hover:text-sky-600" onClick={handleUser}>
+													{pic.owner}
+												</span>
+											</div>
+										</article>
+									);
+								})}
+							</Masonry>
+						</ResponsiveMasonry>
 					</div>
 				</Content>
 			</Layout>
