@@ -12,38 +12,22 @@ import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useCustomText } from "../hooks/useText";
+import { useYoutubeQuery } from "../hooks/useYoutube";
 
 function Youtube() {
-	const api_key = "AIzaSyDC60bIIkAJFzy7ji4a0Eo3AX6tYudhe1w";
+	const { data, isPending, isError, error } = useYoutubeQuery({ type: "list" });
+	const {
+		data: infoData,
+		isPending: infoPending,
+		isError: infoIsError,
+		error: infoError
+	} = useYoutubeQuery({ type: "info", vid_id: data?.[0].snippet.resourceId.videoId });
+	console.log(infoData);
+
 	const delay = 1;
-	const [Lists, setLists] = useState([]);
-	const [Statistic, setStatistic] = useState(null);
 
 	const shortenText = useCustomText("shorten");
 	const changeText = useCustomText("combined");
-
-	//list data fetching
-	useEffect(() => {
-		const pid = "PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu";
-		const num = 11;
-		const req_list = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
-
-		fetch(req_list)
-			.then(data => data.json())
-			.then(json => {
-				setLists(json.items);
-			});
-	}, []);
-
-	//vid statistics data fetching
-	useEffect(() => {
-		const req_vid = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${Lists[0]?.snippet.resourceId.videoId}&key=${api_key}`;
-		fetch(req_vid)
-			.then(data => data.json())
-			.then(json => {
-				setStatistic(json.items[0]?.statistics);
-			});
-	}, [Lists]);
 
 	return (
 		<Layout title={"YOUTUBE"}>
@@ -72,18 +56,15 @@ function Youtube() {
 			</Intro>
 
 			<Content>
-				{/* First Video Info */}
 				<article className="flex flex-wrap justify-between mb-40 ">
-					{/* Video Thumb */}
 					<MotionBox
 						delay={delay + 0.4}
 						className="w-[55%] h-[20vw] [&_img:first-child]:opacity-50 max_xl:w-full max_xl:mb-20 max_xl:h-[40vh] max_lg:h-[30vh] max_md:h-[20vh] max_sm:h-[14vh]">
-						<Link to={`/youtube/${Lists[0]?.id}`}>
-							<Thumbnail src={Lists[0]?.snippet.thumbnails.standard.url} className="size-full " />
+						<Link to={`/youtube/${data?.[0].id}`}>
+							<Thumbnail src={data?.[0].snippet.thumbnails.standard.url} className="size-full " />
 						</Link>
 					</MotionBox>
 
-					{/* information */}
 					<div className="w-[40%] flex flex-wrap content-between max_xl:w-full">
 						<ul className="flex w-full [&>*]:w-1/3 [&_strong]:font-orbitron ">
 							<li>
@@ -93,7 +74,7 @@ function Youtube() {
 								<br />
 
 								<MotionTextEl el={"strong"} className="text-4xl font-[400] max_md:text-xl" delay={delay + 0.6}>
-									{Statistic?.likeCount}
+									{infoData?.[0]?.statistics.likeCount}
 								</MotionTextEl>
 							</li>
 							<li>
@@ -103,7 +84,7 @@ function Youtube() {
 								<br />
 
 								<MotionTextEl el={"strong"} className="text-4xl font-[400] max_md:text-xl" delay={delay + 0.8}>
-									{Statistic?.commentCount}
+									{infoData?.[0]?.statistics.commentCount}
 								</MotionTextEl>
 							</li>
 							<li>
@@ -112,7 +93,7 @@ function Youtube() {
 								</MotionTextEl>
 								<br />
 								<MotionTextEl el={"strong"} className="text-4xl font-[400] max_md:text-xl" delay={delay + 1}>
-									{Statistic?.viewCount}
+									{infoData?.[0]?.statistics.viewCount}
 								</MotionTextEl>
 							</li>
 						</ul>
@@ -124,7 +105,7 @@ function Youtube() {
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: -100, opacity: 0, transition: { delay: 0 } }}
 								transition={{ duration: 1, delay: delay + 1.1 }}>
-								{Lists[0]?.snippet.title.length >= 100 ? Lists[0]?.snippet.title.substring(0, 100) + "..." : Lists[0]?.snippet.title}
+								{data?.[0].snippet.title.length >= 100 ? data?.[0].snippet.title.substring(0, 100) + "..." : data?.[0].snippet.title}
 							</motion.h2>
 							<Line size={"size-[5%]"} />
 							<motion.p
@@ -133,16 +114,15 @@ function Youtube() {
 								animate={{ y: 0, opacity: 1 }}
 								exit={{ y: -100, opacity: 0, transition: { delay: 0 } }}
 								transition={{ duration: 1, delay: delay + 1.4 }}>
-								{Lists[0]?.snippet.description.length >= 260
-									? Lists[0]?.snippet.description.substring(0, 260) + "..."
-									: Lists[0]?.snippet.description}
+								{data?.[0].snippet.description.length >= 260
+									? data?.[0].snippet.description.substring(0, 260) + "..."
+									: data?.[0].snippet.description}
 							</motion.p>
-							<span className="text-xs tracking-widest font-orbitron">{Lists[0]?.snippet.publishedAt.split("T")[0].split("-").join(".")}</span>
+							<span className="text-xs tracking-widest font-orbitron">{data?.[0].snippet.publishedAt.split("T")[0].split("-").join(".")}</span>
 						</div>
 					</div>
 				</article>
 
-				{/* Rest Video Lists Frame */}
 				<h2 className="w-full mb-8 text-4xl font-thin font-orbitron text-black/70 max_md:text-3xl">Youtube Video List</h2>
 				<Line size={"size-[5%]"} className="mb-8" delay={delay + 1.4} />
 				<p className="w-[60%] mb-24 text-xl px-10 relative max_md:w-full">
@@ -153,15 +133,14 @@ function Youtube() {
 				</p>
 
 				<div className="grid grid-cols-7 gap-[3vw] max_lg:grid-cols-2 max_md:grid-cols-1">
-					{Lists.slice(1).map((data, idx) => {
+					{data?.slice(1).map((vid, idx) => {
 						return (
 							<article
 								key={idx}
 								className={twMerge("pb-10  max_lg:col-span-1 max_lg:row-span-1", idx === 0 || idx === 5 ? "col-span-3 row-span-2" : "col-span-2 ")}>
-								{/* Video Thumb */}
-								<Link to={`/youtube/${data.id}`}>
+								<Link to={`/youtube/${vid.id}`}>
 									<Thumbnail
-										src={data.snippet.thumbnails.standard.url}
+										src={vid.snippet.thumbnails.standard.url}
 										shadow={true}
 										className={twMerge(
 											"w-full [&>*:first-child]:opacity-90 mb-6 max_lg:h-[20vw] max_md:h-[40vw] ",
@@ -170,19 +149,18 @@ function Youtube() {
 									/>
 								</Link>
 
-								{/* Video Info */}
 								<div className="pb-6 border-b border-black/20">
 									<h2
 										className={clsx(
 											"text-black/70 max_lg:text-xl max_lg:font-semibold max_lg:pt-0 max_lg:opacity-100",
 											idx === 0 || idx === 5 ? "text-4xl font-thin mb-7 pt-4" : "text-xl font-semibold mb-3 opacity-70"
 										)}>
-										{data.snippet.title}
+										{vid.snippet.title}
 									</h2>
 									<p className={clsx("break-all mb-7 opacity-60 max_lg:text-base max_lg:pt-0", (idx === 0 || idx === 5) && "text-xl font-thin pt-4")}>
-										{shortenText(data.snippet.description, 200)}
+										{shortenText(vid.snippet.description, 200)}
 									</p>
-									<span className="text-sm tracking-wider font-orbitron text-sky-600">{changeText(data.snippet.publishedAt.split("T")[0], ".")}</span>
+									<span className="text-sm tracking-wider font-orbitron text-sky-600">{changeText(vid.snippet.publishedAt.split("T")[0], ".")}</span>
 								</div>
 							</article>
 						);

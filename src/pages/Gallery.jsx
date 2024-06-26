@@ -185,7 +185,7 @@ function Gallery() {
 									return (
 										<article key={idx} className="w-full mb-5 cursor-pointer">
 											<Thumbnail
-												src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+												src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}
 												className="w-full mb-1 [&_img:first-child]:opacity-70"
 												h_auto={true}
 												onClick={() => handleModal(idx)}

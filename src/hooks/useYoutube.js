@@ -1,15 +1,23 @@
-import axios from "axios";
+//npm i @tanstack/react-query
+//npm i @tanstack/react-query-devtools
 import { useQuery } from "@tanstack/react-query";
 
-const fetchYoutube = async () => {
+const fetchYoutube = async ({ queryKey: [_, opt] }) => {
 	const api_key = import.meta.env.VITE_YOUTUBE_KEY;
-	const baseURL = "https://www.googleapis.com/youtube/v3/playlistItems";
+	const baseURL = "https://www.googleapis.com/youtube/v3";
 	const pid = "PLHtvRFLN5v-W5bQjvyH8QTdQQhgflJ3nu";
 	const num = 10;
-	const resultURL = `${baseURL}?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
+	const url_list = `${baseURL}/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
+	const url_info = `${baseURL}/videos?key=${api_key}&part=statistics&id=${opt.vid_id}`;
+	let url = "";
+	opt.type === "list" && (url = url_list);
+	opt.type === "info" && (url = url_info);
 
-	const { data } = await axios.get(resultURL);
-	return data.items;
+	const response = await fetch(url);
+	if (!response.ok) throw new Error("Fail to fetch Flickr data");
+
+	const youtubeData = await response.json();
+	return youtubeData.items;
 };
 
 //react-query에는 쿼리키를 문자열로 지정해서 데이터 호출시 쿼리키가 동일하면 동일한 데이터로 인지해서
@@ -28,11 +36,30 @@ const fetchYoutube = async () => {
 
 //react-query로 관리하는 서버 데이터가 만약 24시간 주기로 변경된다고 하면
 //staleTime을 24시간으로 지정해서 24시간안에는 데이터를 refeching하지 않도록 처리
-export const useYoutubeQuery = () => {
-	return useQuery(["youtubeData"], fetchYoutube, {
-		refetchOnWindowFocus: false,
-		refetchOnMount: false,
-		cacheTime: 1000 * 60 * 60,
-		staleTime: 1000 * 60 * 60
+// export const useYoutubeQuery = () => {
+// 	return useQuery(["youtubeData"], fetchYoutube, {
+// 		refetchOnWindowFocus: false,
+// 		refetchOnMount: false,
+// 		cacheTime: 1000 * 60 * 60,
+// 		staleTime: 1000 * 60 * 60
+// 	});
+// };
+
+export const useYoutubeQuery = opt => {
+	return useQuery({
+		queryKey: ["youtubeData", opt],
+		queryFn: fetchYoutube,
+		staleTime: 1000 * 60 * 60,
+		gcTime: 1000 * 60 * 60
+	});
+};
+
+export const useVidInfo = opt => {
+	return useQuery({
+		queryKey: ["infoData", opt],
+		queryFn: fetchYoutube,
+		enabled: opt.vid_id,
+		staleTime: 1000 * 60 * 60,
+		gcTime: 1000 * 60 * 60
 	});
 };
