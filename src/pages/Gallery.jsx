@@ -8,12 +8,13 @@ import Thumbnail from "../components/Thumbnail";
 import { LuSearch } from "react-icons/lu";
 import Modal from "../components/Modal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { useFlickrQuery } from "../hooks/useFlickrQuery";
 //npm install react-responsive-masonry --save
 
 function Gallery() {
+	console.log("test");
 	const delay = 1.4;
 	const myID = "197119297@N02";
-	const [Pics, setPics] = useState([]);
 	let [IsUser, setIsUser] = useState(myID);
 	let [CurrentType, setCurrentType] = useState("mine");
 	let [IsOpen, setIsOpen] = useState(false);
@@ -22,34 +23,8 @@ function Gallery() {
 	const ref_frame = useRef(null);
 	const ref_input = useRef(null);
 
-	const fetchFlickr = async opt => {
-		const baseURL = "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
-		const key = import.meta.env.VITE_FLICKR_KEY;
-		const num = 40;
-		let url = "";
-
-		const method_user = "flickr.people.getPhotos";
-		const method_interest = "flickr.interestingness.getList";
-		const method_search = "flickr.photos.search";
-
-		const url_interest = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
-		const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.id}`;
-		const url_search = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.keyword}`;
-
-		opt.type === "user" && (url = url_user);
-		opt.type === "interest" && (url = url_interest);
-		opt.type === "search" && (url = url_search);
-
-		const data = await fetch(url);
-		const json = await data.json();
-		if (json.photos.photo.length === 0) {
-			const [btnMine, btnInterest] = ref_btnSet.current.querySelectorAll("button");
-			CurrentType === "interest" && btnInterest.classList.add("on");
-			CurrentType === "mine" && btnMine.classList.add("on");
-			return alert("해당 검색어의 결과값이 없습니다.");
-		}
-		setPics(json.photos.photo);
-	};
+	const [Opt, setOpt] = useState({ type: "user", id: myID });
+	const { data: Pics, isSuccess } = useFlickrQuery(Opt);
 
 	const activateBtn = e => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
@@ -67,7 +42,7 @@ function Gallery() {
 		//inertestGallery함수가 호출시 IsUser값을 빈문자열 처리 (falsy)
 		setIsUser("");
 		activateBtn(e);
-		fetchFlickr({ type: "interest" });
+		setOpt({ type: "interest" });
 		setCurrentType("interest");
 	};
 
@@ -77,7 +52,7 @@ function Gallery() {
 		if (e.target.classList.contains("on") || IsUser === myID) return;
 		setIsUser(myID);
 		activateBtn(e);
-		fetchFlickr({ type: "user", id: myID });
+		setOpt({ type: "user", id: myID });
 		setCurrentType("mine");
 	};
 
@@ -86,7 +61,7 @@ function Gallery() {
 		if (IsUser) return;
 		setIsUser(e.target.innerText);
 		activateBtn(e);
-		fetchFlickr({ type: "user", id: e.target.innerText });
+		setOpt({ type: "user", id: e.target.innerText });
 		setCurrentType("user");
 	};
 
@@ -97,7 +72,7 @@ function Gallery() {
 		if (!tags.trim()) return;
 		setIsUser("");
 		activateBtn(e);
-		fetchFlickr({ type: "search", keyword: tags });
+		setOpt({ type: "search", keyword: tags });
 		setCurrentType("search");
 	};
 
@@ -110,7 +85,7 @@ function Gallery() {
 	};
 
 	useEffect(() => {
-		fetchFlickr({ type: "user", id: myID });
+		setOpt({ type: "user", id: myID });
 		setTimeout(() => {
 			ref_frame.current.classList.add("on");
 		}, 2000);
@@ -181,33 +156,34 @@ function Gallery() {
 						{/* Masonry */}
 						<ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 780: 2, 1000: 3, 1500: 4 }}>
 							<Masonry gutter="40px">
-								{Pics.map((pic, idx) => {
-									return (
-										<article key={idx} className="w-full mb-5 cursor-pointer">
-											<Thumbnail
-												src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}
-												className="w-full mb-1 [&_img:first-child]:opacity-70"
-												h_auto={true}
-												onClick={() => handleModal(idx)}
-											/>
-
-											<h2 className="my-5 font-lg">{pic.title}</h2>
-
-											{/* profile Box */}
-											<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
-												<img
-													className="w-10"
-													src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
-													alt={pic.owner}
-													onError={e => e.target.setAttribute("src", "https://www.flickr.com/images/buddyicon.gif")}
+								{isSuccess &&
+									Pics.map((pic, idx) => {
+										return (
+											<article key={idx} className="w-full mb-5 cursor-pointer">
+												<Thumbnail
+													src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}
+													className="w-full mb-1 [&_img:first-child]:opacity-70"
+													h_auto={true}
+													onClick={() => handleModal(idx)}
 												/>
-												<span className="transition cursor-pointer hover:text-sky-600" onClick={handleUser}>
-													{pic.owner}
-												</span>
-											</div>
-										</article>
-									);
-								})}
+
+												<h2 className="my-5 font-lg">{pic.title}</h2>
+
+												{/* profile Box */}
+												<div className="flex items-end w-full gap-3 pb-3 border-b border-black/40">
+													<img
+														className="w-10"
+														src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+														alt={pic.owner}
+														onError={e => e.target.setAttribute("src", "https://www.flickr.com/images/buddyicon.gif")}
+													/>
+													<span className="transition cursor-pointer hover:text-sky-600" onClick={handleUser}>
+														{pic.owner}
+													</span>
+												</div>
+											</article>
+										);
+									})}
 							</Masonry>
 						</ResponsiveMasonry>
 					</div>
@@ -215,7 +191,7 @@ function Gallery() {
 			</Layout>
 
 			<Modal IsOpen={IsOpen} setIsOpen={setIsOpen}>
-				{Pics[Index] && <img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt="pic" />}
+				{Pics?.[Index] && <img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt="pic" />}
 			</Modal>
 		</>
 	);
