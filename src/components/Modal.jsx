@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useGlobalState } from "../hooks/useGlobal";
+import useStoreOpen from "../hooks/useStore";
 
 export default function Modal({ children }) {
-	const { state, dispatch } = useGlobalState();
+	const { IsOpen, setClose } = useStoreOpen();
 
 	useEffect(() => {
-		document.body.style.overflow = state.IsOpen ? "hidden" : "auto";
-	}, [state.IsOpen]);
+		document.body.style.overflow = IsOpen ? "hidden" : "auto";
+	}, [IsOpen]);
 
 	return (
 		<AnimatePresence>
-			{state.IsOpen && (
+			{IsOpen && (
 				<motion.aside
 					className="fixed top-0 left-0 w-full h-screen bg-white/40 p-[10vw] z-50 backdrop-blur-lg"
 					initial={{ x: "100%" }}
@@ -27,7 +27,7 @@ export default function Modal({ children }) {
 					</motion.div>
 					<motion.span
 						className="cursor-pointer absolute bottom-[4vw] right-[4vw] font-semibold"
-						onClick={() => dispatch({ type: "CLOSE" })}
+						onClick={setClose}
 						initial={{ opacity: 0, x: 200 }}
 						animate={{ opacity: 1, x: 0, transition: { delay: 1.2 } }}
 						exit={{ opacity: 0, x: 200 }}>

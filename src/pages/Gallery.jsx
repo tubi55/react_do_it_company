@@ -10,10 +10,10 @@ import Modal from "../components/Modal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useFlickrQuery } from "../hooks/useFlickrQuery";
 //npm install react-responsive-masonry --save
-import { useGlobalState } from "../hooks/useGlobal";
+import useStoreOpen from "../hooks/useStore";
 
 function Gallery() {
-	const { dispatch } = useGlobalState();
+	const { setOpen } = useStoreOpen();
 	const delay = 1.4;
 	const myID = "197119297@N02";
 	let [IsUser, setIsUser] = useState(myID);
@@ -78,8 +78,7 @@ function Gallery() {
 
 	const handleModal = idx => {
 		console.log("handleModal", idx);
-		//Modal안의 컨텐츠를 출력하기 위한 State
-		dispatch({ type: "OPEN" });
+		setOpen();
 		//클릭한 썸네일의 순번값을 전달하기 위한 State
 		setIndex(idx);
 	};
