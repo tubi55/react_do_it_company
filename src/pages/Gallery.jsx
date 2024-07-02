@@ -10,14 +10,14 @@ import Modal from "../components/Modal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useFlickrQuery } from "../hooks/useFlickrQuery";
 //npm install react-responsive-masonry --save
+import { useGlobalState } from "../hooks/useGlobal";
 
 function Gallery() {
-	console.log("test");
+	const { setIsOpen } = useGlobalState();
 	const delay = 1.4;
 	const myID = "197119297@N02";
 	let [IsUser, setIsUser] = useState(myID);
 	let [CurrentType, setCurrentType] = useState("mine");
-	let [IsOpen, setIsOpen] = useState(false);
 	const [Index, setIndex] = useState(0);
 	const ref_btnSet = useRef(null);
 	const ref_frame = useRef(null);
@@ -190,7 +190,7 @@ function Gallery() {
 				</Content>
 			</Layout>
 
-			<Modal IsOpen={IsOpen} setIsOpen={setIsOpen}>
+			<Modal>
 				{Pics?.[Index] && <img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt="pic" />}
 			</Modal>
 		</>

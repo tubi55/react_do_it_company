@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useGlobalState } from "../hooks/useGlobal";
 
-export default function Modal({ IsOpen, setIsOpen, children }) {
+export default function Modal({ children }) {
+	const { IsOpen, setIsOpen } = useGlobalState();
+
 	useEffect(() => {
 		document.body.style.overflow = IsOpen ? "hidden" : "auto";
 	}, [IsOpen]);
