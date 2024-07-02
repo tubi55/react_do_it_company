@@ -13,7 +13,7 @@ import { useFlickrQuery } from "../hooks/useFlickrQuery";
 import { useGlobalState } from "../hooks/useGlobal";
 
 function Gallery() {
-	const { setIsOpen } = useGlobalState();
+	const { dispatch } = useGlobalState();
 	const delay = 1.4;
 	const myID = "197119297@N02";
 	let [IsUser, setIsUser] = useState(myID);
@@ -79,7 +79,7 @@ function Gallery() {
 	const handleModal = idx => {
 		console.log("handleModal", idx);
 		//Modal안의 컨텐츠를 출력하기 위한 State
-		setIsOpen(true);
+		dispatch({ type: "OPEN" });
 		//클릭한 썸네일의 순번값을 전달하기 위한 State
 		setIndex(idx);
 	};

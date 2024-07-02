@@ -3,15 +3,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useGlobalState } from "../hooks/useGlobal";
 
 export default function Modal({ children }) {
-	const { IsOpen, setIsOpen } = useGlobalState();
+	const { state, dispatch } = useGlobalState();
 
 	useEffect(() => {
-		document.body.style.overflow = IsOpen ? "hidden" : "auto";
-	}, [IsOpen]);
+		document.body.style.overflow = state.IsOpen ? "hidden" : "auto";
+	}, [state.IsOpen]);
 
 	return (
 		<AnimatePresence>
-			{IsOpen && (
+			{state.IsOpen && (
 				<motion.aside
 					className="fixed top-0 left-0 w-full h-screen bg-white/40 p-[10vw] z-50 backdrop-blur-lg"
 					initial={{ x: "100%" }}
@@ -27,7 +27,7 @@ export default function Modal({ children }) {
 					</motion.div>
 					<motion.span
 						className="cursor-pointer absolute bottom-[4vw] right-[4vw] font-semibold"
-						onClick={() => setIsOpen(false)}
+						onClick={() => dispatch({ type: "CLOSE" })}
 						initial={{ opacity: 0, x: 200 }}
 						animate={{ opacity: 1, x: 0, transition: { delay: 1.2 } }}
 						exit={{ opacity: 0, x: 200 }}>
